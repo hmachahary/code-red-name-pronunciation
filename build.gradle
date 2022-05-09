@@ -1,0 +1,139 @@
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+
+buildscript {
+	repositories {
+		gradlePluginPortal()
+	}
+
+	dependencies {
+		classpath "com.github.node-gradle:gradle-node-plugin:3.1.1"
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.5.13'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+ext{
+	appStartClassName = "com.hackathon.codeRed.NamePronounciationApplication"
+}
+group = 'com.hackathon.namepronounciation'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
+apply plugin: 'com.github.node-gradle.node'
+
+ext {
+	set('springCloudAzureVersion', "4.0.0")
+}
+
+
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.azure.spring:spring-cloud-azure-starter-data-cosmos'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "com.azure.spring:spring-cloud-azure-dependencies:${springCloudAzureVersion}"
+	}
+}
+
+task appNpmInstall(type:NpmTask){
+	description = "install all dependencies from package.json"
+	workingDir = file("${project.projectDir}/src/main/webapp")
+	args = ["install", "--debug"]
+}
+
+task appNpmBuild(type:NpmTask){
+	description = "build webapp"
+	workingDir = file("${project.projectDir}/src/main/webapp")
+	args = ["run", "build"]
+}
+
+task copyWebApp(type: Copy){
+	from 'src/main/webapp/build'
+	into 'build/resources/main/static/.'
+}
+
+appNpmBuild.dependsOn appNpmInstall
+copyWebApp.dependsOn appNpmBuild
+compileJava.dependsOn copyWebApp
+
+
+node{
+	workDir = file("${project.buildDir}/nodejs")
+	npmWorkDir = file("${project.buildDir}/npm")
+}
+
+springBoot{
+	mainClassName = "${appStartClassName}"
+	buildInfo{
+		properties{
+			name = "$rootProject.name"
+			artifact = "$rootProject.name"
+			group = "$project.group"
+		}
+	}
+}
+
+
+bootRun{
+	systemProperties = System.properties
+	main = "${appStartClassName}"
+}
+
+
+test {
+	useJUnitPlatform()
+	testLogging{
+		events "passed", "skipped", "failed"
+	}
+}
+
+test.enabled = true
+
+tasks.withType(JavaCompile){
+	options.encoding = 'UTF-8'
+}
+
+task createCheckpointFile{
+	doLast{
+		def checkpoint = "${rootProject.name}-${version}"
+		def TODAY_DT_US = ZonedDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-yy hh:mm:ss a z"))
+		String fileContent = "BUILD_CHECKPOINT:${checkpoint}\nBUILD TSTAMP: ${TODAY_DT_US}\nBUILD_DIR: $projectDir"
+		new File("${buildDir}/${rrootProject.name}.checkpoint").write(fileContent)
+	}
+}
+
+
+
+bootJar{
+	mainClassName = "${appStartClassName}"
+	from file("${buildDir}/${rootProject.name}.checkpoint")
+	baseName = "${rootProject.name}"
+	destinationDir = file("${buildDir}/libs")
+}
+
+bootJar.dependsOn createCheckpointFile
