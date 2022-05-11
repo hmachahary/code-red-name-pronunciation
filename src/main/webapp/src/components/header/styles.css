@@ -1,0 +1,17 @@
+.wf_header {
+	height: 56px;
+	max-height: 56px;
+	background-color: #d71e28;
+	border-bottom: 4px solid #ffcd41;
+	padding: 0 24px;
+	color: #fff;
+}
+.wf_header-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.wf_logo {
+	font-size: 34px;
+	padding: 11px 0;
+}
