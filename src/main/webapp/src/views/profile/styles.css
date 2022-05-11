@@ -1,0 +1,21 @@
+.wf_container-profile--left .wf_profile_img-container {
+	height: 26rem;
+	width: 100%;
+}
+.wf_container-profile--left .wf_profile_img-container .wf_profile-img {
+	border-radius: 0;
+}
+.wf_container-profile--left .wf_profile-heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	margin: 3rem 0;
+}
+.wf_container-profile--left .wf_profile-heading h4 {
+	margin-right: 8px;
+	font-size: 1.2rem;
+}
+
+.wf_container-profile--right {
+	padding-left: 4.2rem;
+}

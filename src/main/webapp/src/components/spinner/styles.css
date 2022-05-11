@@ -1,0 +1,30 @@
+.wf_spinner {
+	position: fixed;
+	z-index: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(255, 255, 255, 0.6);
+}
+.wf_spinner:before {
+	width: 46px;
+	height: 46px;
+	border-radius: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	content: "";
+	display: block;
+	border: 5px solid #343a40;
+	border-color: #343a40 transparent #343a40;
+	animation: load3 1.2s linear infinite;
+}
+@keyframes load3 {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

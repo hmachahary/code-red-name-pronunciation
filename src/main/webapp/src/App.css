@@ -4,3 +4,6 @@
 	display: grid;
 	grid-template-rows: auto 1fr auto;
 }
+.wf_container {
+	padding: 3.4rem 5rem;
+}
