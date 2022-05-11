@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { routes } from "./routes";
 import { Header, Footer, Button } from "./components";
 import "./assets/css/default.css";
+import "./App.css";
 
 function App() {
 	return (
