@@ -1,9 +1,29 @@
+import React, {useEffect, useState, useContext} from 'react';
+
 import { Horizontal, Speaker } from "../../components";
 import profile from "../../assets/images/profile.jpg";
-import speaker from "../../assets/images/speaker.png";
+import {getLoggedInUserDetails} from "../../actions/profile"
 import "./styles.css";
 
 export default function Profile() {
+const[userdetails, setuserdetails] = useState({});
+
+	  useEffect(() => {
+        (async () => {
+			const userData = window.sessionStorage.getItem("userdata")
+            const response = await getLoggedInUserDetails(JSON.stringify(userData.username));
+            if(response.status === 200){
+                setuserdetails(response.data);
+            }else{
+				setuserdetails({});
+			}
+        })();
+      
+        return () => {
+          // this now gets called when the component unmounts
+        };
+      }, []);
+	  
 	return (
 		<div className="wf_container-profile">
 			<div className="row">
