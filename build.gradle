@@ -18,7 +18,7 @@ plugins {
 }
 
 ext{
-	appStartClassName = "com.hackathon.codeRed.NamePronounciationApplication"
+	appStartClassName = "com.example.codered.namepronounciation.NamePronounciationApplication"
 }
 group = 'com.hackathon.namepronounciation'
 version = '0.0.1-SNAPSHOT'
@@ -43,12 +43,15 @@ ext {
 }
 
 
-
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.azure.spring:spring-cloud-azure-starter-data-cosmos'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.postgresql:postgresql'
+//	implementation 'io.springfox:springfox-swagger2:2.7.0'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.5'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
