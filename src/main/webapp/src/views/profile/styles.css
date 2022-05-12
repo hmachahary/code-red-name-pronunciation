@@ -19,3 +19,48 @@
 .wf_container-profile--right {
 	padding-left: 4.2rem;
 }
+
+.wf_image_speaker{
+	width: 30px !important;
+	margin-left: 3%;
+	background-color: white;
+}
+
+.wf_name_designation{
+	font-size: x-small;
+    margin-top: 1%;
+	color: #d71e28;
+}
+
+.wf-information-margin-top{
+	margin-top: 1% !important;
+}
+
+.wf-about-me-margin-top{
+	margin-top: 4% !important;
+}
+
+
+.wf-about-me-subheading{
+	font-style: italic;
+}
+
+.wf_container-profile--right-sub {
+	padding-left: .2rem;
+}
+
+.wf-about-me-margin-top-phone{
+	margin-top: 16% !important;
+}
+
+.wf-about-me-margin-top-address{
+	margin-top: 2% !important;
+}
+
+.wf-address-width{
+	width: 18%;
+}
+
+.wf-about-me-margin-top-hobbies{
+	margin-top: 2% !important;
+}
