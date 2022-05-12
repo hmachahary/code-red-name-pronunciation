@@ -1,8 +1,12 @@
 import PropTypes from "prop-types";
 import "./styles.css";
 
-export default function Button({ children, type, onClick }) {
-	return <button className={`wf_btn`}>{children}</button>;
+export default function Button({ children, type, onClick, title }) {
+	return (
+		<button title={title} onClick={onClick} className={`wf_btn`}>
+			{children}
+		</button>
+	);
 }
 
 Button.defaultProps = {

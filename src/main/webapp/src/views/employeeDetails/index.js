@@ -1,38 +1,28 @@
 import React, { useEffect, useState } from "react";
+import {getEmployeeData} from "../../actions/employee"
 import "./styles.css";
 
 import { Horizontal, Speaker } from "../../components";
 
-const emp =[
-    {   id:"A12345",
-        name:"John Doe",
-        email:"john.doe@domain.com",
-        culture:"en-us"
-    },
-    {   id:"A12355",
-        name:"John Doe",
-        email:"john.doe@domain.com",
-        culture:"en-uk"
-    },
-    {   id:"A12365",
-        name:"John Doe",
-        email:"john.doe@domain.com",
-        culture:"spanish"
-    },
-    {   id:"A12375",
-        name:"John Doe",
-        email:"john.doe@domain.com",
-        culture:"nepali"
-    }     
-]
+
 
 export default function Employees() {
-    const [data, setData] = useState([]);
-    useEffect(() => {
-        setData(emp);
+    const [data, setData] = useState([]);   
+
+      useEffect(() => {
+        (async () => {
+            const response = await getEmployeeData();
+            if(response.data.length > 0){
+                setData(response.data);
+            }
+        })();
+      
+        return () => {
+          // this now gets called when the component unmounts
+        };
       }, []);
     
-    console.log(data)
+    
 	return (
         <div className="">
     <table className ="minimalistBlack center">

@@ -1,27 +1,45 @@
-import { useState } from "react";
-import { AudioRecorder, Horizontal, Speaker } from "../../components";
+import React, { useEffect, useState } from "react";
+
+import { Horizontal, Speaker, AudioRecorder } from "../../components";
 import profile from "../../assets/images/profile.jpg";
-import speaker from "../../assets/images/speaker.png";
+import { getLoggedInUserDetails } from "../../actions/profile";
 import "./styles.css";
 
 export default function Profile() {
+	const [userdetails, setuserdetails] = useState({});
 	const [record, setRecord] = useState(false);
 
-	const startRecording = () => {
-		setRecord(true);
-	};
+	useEffect(() => {
+		(async () => {
+			const userData = window.sessionStorage.getItem("userdata");
+			const response = await getLoggedInUserDetails(JSON.stringify(userData.username));
+			if (response.status === 200) {
+				setuserdetails(response.data);
+			} else {
+				setuserdetails({});
+			}
+		})();
 
-	const stopRecording = () => {
-		setRecord(false);
-	};
+		return () => {
+			// this now gets called when the component unmounts
+		};
+	}, []);
 
-	const onData = (recordedBlob) => {
-		console.log("chunk of real-time data is: ", recordedBlob);
-	};
+	// const startRecording = () => {
+	// 	setRecord(true);
+	// };
 
-	const onStop = (recordedBlob) => {
-		console.log("recordedBlob is: ", recordedBlob);
-	};
+	// const stopRecording = () => {
+	// 	setRecord(false);
+	// };
+
+	// const onData = (recordedBlob) => {
+	// 	console.log("chunk of real-time data is: ", recordedBlob);
+	// };
+
+	// const onStop = (recordedBlob) => {
+	// 	console.log("recordedBlob is: ", recordedBlob);
+	// };
 	return (
 		<div className="wf_container-profile">
 			<div className="row">
@@ -94,13 +112,6 @@ export default function Profile() {
 									</p>
 								</div>
 							</div>
-							<AudioRecorder
-								record={record}
-								onStop={onStop}
-								onData={onData}
-								startRecording={startRecording}
-								stopRecording={stopRecording}
-							/>
 						</div>
 					</div>
 				</div>

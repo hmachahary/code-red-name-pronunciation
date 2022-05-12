@@ -21,12 +21,12 @@ export default function AudioRecorder({ record, onData, onStop, startRecording, 
 			</div>
 			<div className="wf_audio-recorder-controls">
 				{!record && (
-					<Button onClick={startRecording}>
+					<Button onClick={startRecording} title="Play">
 						<MicIcon />
 					</Button>
 				)}
 				{record && (
-					<Button onClick={stopRecording}>
+					<Button onClick={stopRecording} title="Stop">
 						<StopIcon />
 					</Button>
 				)}
