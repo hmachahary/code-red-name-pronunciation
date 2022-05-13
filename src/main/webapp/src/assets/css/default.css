@@ -150,7 +150,7 @@ html {
 body {
 	box-sizing: border-box;
 	margin: 0;
-	font-family: Georgia, "Times New Roman", Times, serif, "Helvetica Neue", sans-serif;
+	font-family: "Times New Roman", Times, serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size: 1.33333rem;
