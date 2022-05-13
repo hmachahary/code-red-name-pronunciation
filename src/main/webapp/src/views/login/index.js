@@ -9,6 +9,8 @@ export default function Login() {
 	const navigate = useNavigate();
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const [isAuthenticatedIssue, setIsAuthenticatedIssue] = useState(false);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -35,11 +37,13 @@ export default function Login() {
 		if (response.status === 200) {
 			navigateToProfile(response.data);
 			window.sessionStorage.setItem("userdata", JSON.stringify(response.data));
+            setError("");
 		} else {
-			const data = { username: username, isAdmin: true };
+			const data = { username: username, isAdmin: false };
 			window.sessionStorage.setItem("userdata", JSON.stringify(data));
 			navigateToProfile(data);
-		}
+            setError("Invalid Username/Passowrd. Please contact Admin.");
+            setIsAuthenticatedIssue(true)}
 	};
 
 	return (
@@ -61,11 +65,13 @@ export default function Login() {
 							value={password}
 							type="password"
 							placeholder="Password"
-						/>
+						/>                      
 						<Button type="primary" onClick={(e) => checkLoggedUser(e)}>
 							Login
 						</Button>
+                        
 					</div>
+                    {isAuthenticatedIssue && <span className="error-msg">{error}</span> }
 				</div>
 			</div>
 		</div>
