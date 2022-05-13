@@ -13,9 +13,10 @@
 }
 .wf_container-profile--left .wf_profile-heading h4,
 .wf_container-profile--right .wf_profile-heading h4 {
-	margin-right: 1rem;
+	margin-right: 0.5rem;
 	font-size: 1.4rem;
 	text-transform: uppercase;
+	margin-bottom: 0;
 }
 .wf_profile-heading .wf_hrline {
 	flex: 2;
@@ -23,6 +24,7 @@
 
 .wf_container-profile--right {
 	padding-left: 4.2rem;
+	padding-right: 4.2rem;
 }
 
 .wf_image_speaker {
@@ -35,65 +37,6 @@
 	font-size: 1.6rem;
 	margin-top: 1%;
 	color: #d71e28;
-}
-
-.wf_container-profile--right-sub {
-	padding-left: 0.2rem;
-}
-
-.opt-out {
-	margin-top: 2% !important;
-	margin-left: 90% !important;
-	cursor: pointer;
-	background-color: #d71e28;
-	color: #ffff;
-}
-
-.opt-in {
-	margin-top: 2% !important;
-	margin-left: 88% !important;
-	cursor: pointer;
-	background-color: #299656;
-}
-
-.buttons {
-	width: 200px;
-	display: flex;
-}
-
-.action_btn_primary {
-	width: 200px;
-	display: inline;
-	background-color: #299656;
-	border: solid 1px;
-	color: #ffff;
-	cursor: pointer;
-}
-
-.action_btn_danger {
-	width: 200px;
-	margin: 0 auto;
-	display: inline;
-	background-color: #d71e28;
-	margin-top: 2% !important;
-	margin-left: 1% !important;
-	border: solid 1px;
-	color: #ffff;
-	cursor: pointer;
-}
-
-.action_btn_primary:disabled,
-.action_btn_primary[disabled] {
-	border: 1px solid #999999;
-	background-color: #cccccc;
-	color: #666666;
-}
-
-.action_btn_danger:disabled,
-.action_btn_danger[disabled] {
-	border: 1px solid #999999;
-	background-color: #cccccc;
-	color: #666666;
 }
 
 .wf_container-profile--right .wf_profile-name {
@@ -120,4 +63,8 @@
 }
 .wf_container-profile--right .wf_profie-syllables svg:hover {
 	cursor: pointer;
+}
+.wf_container-profile--left .wf_profile-content p,
+.wf_container-profile--right .wf_profile-content p {
+	margin-bottom: 0.8rem;
 }
