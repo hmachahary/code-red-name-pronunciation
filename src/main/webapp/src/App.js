@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Suspense } from "react";
 import { routes } from "./routes";
 import { Header, Footer, Spinner } from "./components";
+import "./assets/css/bootstrap.min.css";
 import "./assets/css/default.css";
 import "./App.css";
 

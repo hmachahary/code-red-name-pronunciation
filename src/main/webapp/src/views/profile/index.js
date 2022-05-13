@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-
-import { Horizontal, Speaker, AudioRecorder } from "../../components";
+import { Link } from "react-router-dom";
+import { Horizontal } from "../../components";
 import profile from "../../assets/images/profile.jpg";
+import { ReactComponent as SpeakerIcon } from "../../assets/icons/sound.svg";
 import { getLoggedInUserDetails } from "../../actions/profile";
 import "./styles.css";
 
@@ -9,7 +10,6 @@ export default function Profile() {
 	const [userdetails, setuserdetails] = useState({});
 	const [record, setRecord] = useState(false);
 	const [optOut, setOptOut] = useState(false);
-	
 
 	useEffect(() => {
 		(async () => {
@@ -17,7 +17,7 @@ export default function Profile() {
 			const response = await getLoggedInUserDetails(JSON.stringify(userData.username));
 			if (response.status === 200) {
 				setuserdetails(userData);
-			} else {				
+			} else {
 				setuserdetails(userData);
 			}
 		})();
@@ -27,17 +27,14 @@ export default function Profile() {
 		};
 	}, []);
 
-	const optOutAction = (e) =>{
-		
+	const optOutAction = (e) => {
 		const name = e.target.name;
-		if(name === optOut){
-			setOptOut(!optOut);			
+		if (name === optOut) {
+			setOptOut(!optOut);
+		} else {
+			setOptOut(!optOut);
 		}
-		else{
-			setOptOut(!optOut)			
-		}
-
-	}
+	};
 
 	return (
 		<div className="wf_container-profile">
@@ -48,79 +45,96 @@ export default function Profile() {
 							<img className="wf_profile-img" src={profile} alt="Profile picture" />
 						</div>
 						<div className="wf_profile-heading">
-							<h4>OFFICE</h4>
+							<h4>WORK</h4>
 							<Horizontal />
+						</div>
+						<div className="wf_profile-content">
+							<p>Sunflower Apartment, 19th Cross, Abc Street</p>
+							<p>ABC Layout, Bangalore-00101</p>
+							<p>India</p>
 						</div>
 						<div className="wf_profile-heading">
 							<h4>SKILLS</h4>
 							<Horizontal />
 						</div>
-						<div className="wf_profile-skills">
-							<h5>HTML5</h5>
-							<h5>CSS3</h5>
-							<h5>JAVASCRIPT</h5>
-							<h5>JQUERY</h5>
-							<h5>REACTJS</h5>
-							<h5>NODEJS</h5>
+						<div className="wf_profile-content">
+							<p>HTML5, CSS3, Javascript, JQuery, ReactJs, NodeJs</p>
 						</div>
 					</div>
 				</div>
 				<div className="col-12 col-md-9 col-lg-9">
 					<div className="wf_container-profile--right">
-						<div className="name-speaker">
-							<p>
-								{userdetails.username}	
-							</p>
-							<div className="speaker">
-							<Speaker />{" "}
-							</div>
+						<h1 className="wf_profile-name">
+							{userdetails.username}
+							<Link to="">Edit profile</Link>
+						</h1>
+						<h2 className="wf_profie-syllables">
+							<span>(Hit-lar Ma-cha-hary)</span>
+							<SpeakerIcon />
+						</h2>
+						<h2 className="wf_name_designation">{"Senior Software Engineer"}</h2>
+						<div className="mt-2">
+							<p>{"Joined on - December 2022"}</p>
 						</div>
-						
-						
-						<p className="wf_name_designation">{"Work Title here"}</p>
-						<div className="wf-information-margin-top">
-							<p>{"Joined on - 2022"}</p>
+						<div className="wf_profile-heading">
+							<h4>ABOUT ME</h4>
+							<Horizontal />
 						</div>
-						<Horizontal />
-						<div className="wf-about-me-margin-top">
-							<p>About Me:</p>
+						<div className="wf_profile-content">
 							<p className="wf-information-margin-top wf-about-me-subheading">
 								{
 									"'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'"
 								}
 							</p>
 						</div>
-						<Horizontal />
-						<div className="wf_container-profile--right-sub wf-about-me-margin-top-phone">
-							<div className="wf_profile-heading">
-								<h4>Phone:</h4>
-								<p className="">9517538500</p>
-							</div>
+						<div className="wf_profile-heading">
+							<h4>EMAIL</h4>
 							<Horizontal />
-							<div className="wf_profile-heading wf-about-me-margin-top-address">
-								<h4>Address:</h4>
-								<div className="wf-address-width">
-									<p>
-										{
-											"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
-										}
-									</p>
-								</div>
-							</div>
+						</div>
+						<div className="wf_profile-content">
+							<p>abcdefghij@gmail.com</p>
+						</div>
+						<div className="wf_profile-heading">
+							<h4>PHONE</h4>
 							<Horizontal />
-							<div className="wf_profile-heading wf-about-me-margin-top-address">
-								<h4>Hoobies/Clubs:</h4>
-								<div className="wf-address-width">
-									<p>
-										{
-											"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
-										}
-									</p>
-								</div>
-							</div>							
-							<div class="action_btn">
-								<button className="action_btn_primary" name="optIn" disabled={!optOut} onClick={e=>optOutAction(e)}>Opt In</button>
-								<button  className="action_btn_danger" name = "optOut" disabled = {optOut} onClick={e=>optOutAction(e)}>Opt Out</button>
+						</div>
+						<div className="wf_profile-content">
+							<p>+91-9876543201, +0361-345-213</p>
+						</div>
+						<div className="wf_profile-heading">
+							<h4>ADDRESS</h4>
+							<Horizontal />
+						</div>
+						<div className="wf_profile-content">
+							<p>Sunflower Apartment, 19th Cross, Abc Street</p>
+							<p>ABC Layout, Bangalore-00101</p>
+							<p>India</p>
+						</div>
+						<div className="wf_profile-heading">
+							<h4>HOBBIES/CLUBS</h4>
+							<Horizontal />
+						</div>
+						<div className="wf_profile-content">
+							<p>Painting, Travel</p>
+						</div>
+						<div className="wf_container-profile--right-sub">
+							<div className="action_btn">
+								<button
+									className="action_btn_primary"
+									name="optIn"
+									disabled={!optOut}
+									onClick={(e) => optOutAction(e)}
+								>
+									Opt In
+								</button>
+								<button
+									className="action_btn_danger"
+									name="optOut"
+									disabled={optOut}
+									onClick={(e) => optOutAction(e)}
+								>
+									Opt Out
+								</button>
 							</div>
 						</div>
 					</div>
