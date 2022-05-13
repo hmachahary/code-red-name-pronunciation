@@ -8,13 +8,13 @@ const Employees = lazy(() => import("../views/employeeDetails"));
 export const routes = [
 	{
 		name: "Login",
-		path: "/",
+		path: "/login",
 		component: <Login />,
 		protected: false,
 	},
 	{
 		name: "Profile",
-		path: "/profile",
+		path: "/",
 		component: <Profile />,
 		protected: false,
 	},

@@ -15,6 +15,14 @@
 	font-size: 3.2rem;
 	padding: 11px 0;
 }
+.wf_logo a {
+	text-decoration: none;
+	color: #fff;
+}
+.wf_logo a:hover {
+	color: #fff;
+	cursor: pointer;
+}
 .wf_profile {
 	height: 4rem;
 	width: 4rem;
@@ -26,4 +34,51 @@
 }
 .wf_profile-img:hover {
 	cursor: pointer;
+}
+.wf_profile .btn-secondary {
+	width: 3.8rem;
+	height: 3.8rem;
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+.wf_profile .btn-secondary:focus,
+.wf_profile .btn-secondary:active {
+	border: none;
+	outline: none;
+	box-shadow: none;
+	background: none;
+}
+.wf_profile .btn-secondary:hover {
+	background: none;
+}
+.wf_profile .dropdown-menu.show {
+	right: 0;
+	top: 4.1rem;
+}
+.wf_profile .dropdown-toggle::after {
+	display: none;
+}
+.wf_profile .dropdown-menu.show::after {
+	display: inline-block;
+	margin-left: 0.255em;
+	vertical-align: 0.255em;
+	content: "";
+	border-right: 0.4em solid transparent;
+	border-left: 0.4em solid transparent;
+	position: absolute;
+	top: -4px;
+	right: 15%;
+	border-bottom: 0.4em solid #fff;
+}
+.wf_profile .dropdown-menu .dropdown-item {
+	font-size: 1.33333rem;
+	font-weight: normal;
+	padding: 8px 12px;
+	line-height: 1.5;
+}
+.wf_profile .dropdown-menu .dropdown-item:hover {
+	background: none;
+	text-decoration: underline;
 }
