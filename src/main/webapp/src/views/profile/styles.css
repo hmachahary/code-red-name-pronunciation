@@ -5,62 +5,66 @@
 .wf_container-profile--left .wf_profile_img-container .wf_profile-img {
 	border-radius: 0;
 }
-.wf_container-profile--left .wf_profile-heading {
+.wf_container-profile--left .wf_profile-heading,
+.wf_container-profile--right .wf_profile-heading {
 	display: flex;
-	justify-content: space-between;
 	align-items: flex-end;
-	margin: 3rem 0;
+	margin: 3rem 0 1.2rem 0;
 }
-.wf_container-profile--left .wf_profile-heading h4 {
-	margin-right: 8px;
-	font-size: 1.2rem;
+.wf_container-profile--left .wf_profile-heading h4,
+.wf_container-profile--right .wf_profile-heading h4 {
+	margin-right: 0.5rem;
+	font-size: 1.4rem;
+	text-transform: uppercase;
+	margin-bottom: 0;
+}
+.wf_profile-heading .wf_hrline {
+	flex: 2;
 }
 
 .wf_container-profile--right {
 	padding-left: 4.2rem;
+	padding-right: 4.2rem;
 }
 
-.wf_image_speaker{
+.wf_image_speaker {
 	width: 30px !important;
 	margin-left: 3%;
 	background-color: white;
 }
 
-.wf_name_designation{
-	font-size: x-small;
-    margin-top: 1%;
+.wf_container-profile--right .wf_name_designation {
+	font-size: 1.6rem;
+	margin-top: 1%;
 	color: #d71e28;
 }
 
-.wf-information-margin-top{
-	margin-top: 1% !important;
+.wf_container-profile--right .wf_profile-name {
+	font-size: 2.2rem;
+	display: flex;
+	align-items: center;
 }
-
-.wf-about-me-margin-top{
-	margin-top: 4% !important;
+.wf_container-profile--right .wf_profile-name a {
+	font-size: 1.4rem;
+	text-decoration: none;
+	padding-left: 3.5rem;
 }
-
-
-.wf-about-me-subheading{
+.wf_container-profile--right .wf_profie-syllables {
+	display: flex;
+	align-items: center;
+}
+.wf_container-profile--right .wf_profie-syllables span {
 	font-style: italic;
+	padding-right: 1.4rem;
+	font-size: 1.6rem;
 }
-
-.wf_container-profile--right-sub {
-	padding-left: .2rem;
+.wf_container-profile--right .wf_profie-syllables svg {
+	fill: #424141;
 }
-
-.wf-about-me-margin-top-phone{
-	margin-top: 16% !important;
+.wf_container-profile--right .wf_profie-syllables svg:hover {
+	cursor: pointer;
 }
-
-.wf-about-me-margin-top-address{
-	margin-top: 2% !important;
-}
-
-.wf-address-width{
-	width: 18%;
-}
-
-.wf-about-me-margin-top-hobbies{
-	margin-top: 2% !important;
+.wf_container-profile--left .wf_profile-content p,
+.wf_container-profile--right .wf_profile-content p {
+	margin-bottom: 0.8rem;
 }
