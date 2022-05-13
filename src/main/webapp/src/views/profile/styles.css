@@ -37,6 +37,10 @@
 	color: #d71e28;
 }
 
+.wf_container-profile--right-sub {
+	padding-left: 0.2rem;
+}
+
 .opt-out {
 	margin-top: 2% !important;
 	margin-left: 90% !important;
