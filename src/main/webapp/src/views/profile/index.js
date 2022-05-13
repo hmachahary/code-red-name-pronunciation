@@ -73,7 +73,7 @@ export default function Profile() {
 							<SpeakerIcon />
 						</h2>
 						<h2 className="wf_name_designation">{"Senior Software Engineer"}</h2>
-						<div className="wf-information-margin-top">
+						<div className="mt-2">
 							<p>{"Joined on - December 2022"}</p>
 						</div>
 						<div className="wf_profile-heading">
@@ -117,7 +117,7 @@ export default function Profile() {
 						<div className="wf_profile-content">
 							<p>Painting, Travel</p>
 						</div>
-						<div className="wf_container-profile--right-sub wf-about-me-margin-top-phone">
+						<div className="wf_container-profile--right-sub">
 							<div className="action_btn">
 								<button
 									className="action_btn_primary"
