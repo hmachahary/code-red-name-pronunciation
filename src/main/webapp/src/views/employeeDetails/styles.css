@@ -3,6 +3,7 @@ table.minimalistBlack {
 	width: 75%;
 	text-align: center;
 	border-collapse: collapse;
+	margin-top: 1% !important;
 }
 table.minimalistBlack td,
 table.minimalistBlack th {
@@ -35,4 +36,62 @@ table.minimalistBlack thead th {
 
 .center {
 	margin: 0 auto !important;
+}
+
+.heading{
+	font-size: x-large;
+	color: #d71e28;
+	margin-left: 13%;
+	text-decoration: underline;
+}
+
+.name-speaker {
+	width: 100px;	
+	display: flex;
+}
+
+.speaker{
+	width: 100px;	
+	display: inline;
+}
+
+.buttons {
+	width: 100px;	
+	display: flex;
+}
+	
+.action_btn_primary {
+	width: 100px;	
+	display: inline;
+	background-color: #299656;
+	border: solid 1px;
+	color: #ffff;
+	cursor: pointer;
+}
+
+.action_btn_danger {
+	width: 200px;
+	margin: 0 auto;
+	display: inline;
+	background-color: #d71e28;
+	margin-top: 2% !important;
+	margin-left: 1% !important;
+	border: solid 1px;
+	color: #ffff;
+	cursor: pointer;
+	margin-left: 71% !important;
+}
+
+.action_btn_primary:disabled,
+.action_btn_primary[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.action_btn_danger:disabled,
+.action_btn_danger[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }

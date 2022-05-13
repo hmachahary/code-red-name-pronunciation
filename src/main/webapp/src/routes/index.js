@@ -9,6 +9,12 @@ export const routes = [
 	{
 		name: "Login",
 		path: "/",
+		component: <Login />,		
+		protected: false,
+	},
+	{
+		name: "Login",
+		path: "/login",
 		component: <Login />,
 		protected: false,
 	},
