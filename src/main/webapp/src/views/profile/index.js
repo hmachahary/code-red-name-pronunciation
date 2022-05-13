@@ -8,15 +8,17 @@ import "./styles.css";
 export default function Profile() {
 	const [userdetails, setuserdetails] = useState({});
 	const [record, setRecord] = useState(false);
+	const [optOut, setOptOut] = useState(false);
+	
 
 	useEffect(() => {
 		(async () => {
-			const userData = window.sessionStorage.getItem("userdata");
+			const userData = JSON.parse(sessionStorage.userdata);
 			const response = await getLoggedInUserDetails(JSON.stringify(userData.username));
 			if (response.status === 200) {
-				setuserdetails(response.data);
-			} else {
-				setuserdetails({});
+				setuserdetails(userData);
+			} else {				
+				setuserdetails(userData);
 			}
 		})();
 
@@ -25,21 +27,18 @@ export default function Profile() {
 		};
 	}, []);
 
-	// const startRecording = () => {
-	// 	setRecord(true);
-	// };
+	const optOutAction = (e) =>{
+		
+		const name = e.target.name;
+		if(name === optOut){
+			setOptOut(!optOut);			
+		}
+		else{
+			setOptOut(!optOut)			
+		}
 
-	// const stopRecording = () => {
-	// 	setRecord(false);
-	// };
+	}
 
-	// const onData = (recordedBlob) => {
-	// 	console.log("chunk of real-time data is: ", recordedBlob);
-	// };
-
-	// const onStop = (recordedBlob) => {
-	// 	console.log("recordedBlob is: ", recordedBlob);
-	// };
 	return (
 		<div className="wf_container-profile">
 			<div className="row">
@@ -68,9 +67,16 @@ export default function Profile() {
 				</div>
 				<div className="col-12 col-md-9 col-lg-9">
 					<div className="wf_container-profile--right">
-						<p>
-							Hitlar Machahary <Speaker />{" "}
-						</p>
+						<div className="name-speaker">
+							<p>
+								{userdetails.username}	
+							</p>
+							<div className="speaker">
+							<Speaker />{" "}
+							</div>
+						</div>
+						
+						
 						<p className="wf_name_designation">{"Work Title here"}</p>
 						<div className="wf-information-margin-top">
 							<p>{"Joined on - 2022"}</p>
@@ -111,6 +117,10 @@ export default function Profile() {
 										}
 									</p>
 								</div>
+							</div>							
+							<div class="action_btn">
+								<button className="action_btn_primary" name="optIn" disabled={!optOut} onClick={e=>optOutAction(e)}>Opt In</button>
+								<button  className="action_btn_danger" name = "optOut" disabled = {optOut} onClick={e=>optOutAction(e)}>Opt Out</button>
 							</div>
 						</div>
 					</div>

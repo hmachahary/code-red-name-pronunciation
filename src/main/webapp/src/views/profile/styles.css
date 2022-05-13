@@ -64,3 +64,58 @@
 .wf-about-me-margin-top-hobbies{
 	margin-top: 2% !important;
 }
+
+.opt-out{
+	margin-top: 2% !important;
+	margin-left: 90% !important;
+	cursor: pointer;
+	background-color: #d71e28;
+	color: #ffff;
+}
+
+.opt-in{
+	margin-top: 2% !important;
+	margin-left: 88% !important;
+	cursor: pointer;
+	background-color: #299656;
+}
+
+.buttons {
+	width: 200px;	
+	display: flex;
+}
+	
+.action_btn_primary {
+	width: 200px;	
+	display: inline;
+	background-color: #299656;
+	border: solid 1px;
+	color: #ffff;
+	cursor: pointer;
+}
+
+.action_btn_danger {
+	width: 200px;
+	margin: 0 auto;
+	display: inline;
+	background-color: #d71e28;
+	margin-top: 2% !important;
+	margin-left: 1% !important;
+	border: solid 1px;
+	color: #ffff;
+	cursor: pointer;
+}
+
+.action_btn_primary:disabled,
+.action_btn_primary[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.action_btn_danger:disabled,
+.action_btn_danger[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}

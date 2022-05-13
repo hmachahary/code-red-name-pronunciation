@@ -162,3 +162,9 @@ footer ol li a:hover {
 footer small {
 	font-size: 11px;
 }
+
+.error-msg{
+	font-size: small;
+    margin-top: 1%;
+	color: #d71e28;	
+}
