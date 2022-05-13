@@ -1,29 +1,45 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, { useEffect, useState } from "react";
 
-import { Horizontal, Speaker } from "../../components";
+import { Horizontal, Speaker, AudioRecorder } from "../../components";
 import profile from "../../assets/images/profile.jpg";
-import {getLoggedInUserDetails} from "../../actions/profile"
+import { getLoggedInUserDetails } from "../../actions/profile";
 import "./styles.css";
 
 export default function Profile() {
-const[userdetails, setuserdetails] = useState({});
+	const [userdetails, setuserdetails] = useState({});
+	const [record, setRecord] = useState(false);
 
-	  useEffect(() => {
-        (async () => {
-			const userData = window.sessionStorage.getItem("userdata")
-            const response = await getLoggedInUserDetails(JSON.stringify(userData.username));
-            if(response.status === 200){
-                setuserdetails(response.data);
-            }else{
+	useEffect(() => {
+		(async () => {
+			const userData = window.sessionStorage.getItem("userdata");
+			const response = await getLoggedInUserDetails(JSON.stringify(userData.username));
+			if (response.status === 200) {
+				setuserdetails(response.data);
+			} else {
 				setuserdetails({});
 			}
-        })();
-      
-        return () => {
-          // this now gets called when the component unmounts
-        };
-      }, []);
-	  
+		})();
+
+		return () => {
+			// this now gets called when the component unmounts
+		};
+	}, []);
+
+	// const startRecording = () => {
+	// 	setRecord(true);
+	// };
+
+	// const stopRecording = () => {
+	// 	setRecord(false);
+	// };
+
+	// const onData = (recordedBlob) => {
+	// 	console.log("chunk of real-time data is: ", recordedBlob);
+	// };
+
+	// const onStop = (recordedBlob) => {
+	// 	console.log("recordedBlob is: ", recordedBlob);
+	// };
 	return (
 		<div className="wf_container-profile">
 			<div className="row">
@@ -31,7 +47,7 @@ const[userdetails, setuserdetails] = useState({});
 					<div className="wf_container-profile--left">
 						<div className="wf_profile_img-container">
 							<img className="wf_profile-img" src={profile} alt="Profile picture" />
-						</div>						
+						</div>
 						<div className="wf_profile-heading">
 							<h4>OFFICE</h4>
 							<Horizontal />
@@ -52,37 +68,51 @@ const[userdetails, setuserdetails] = useState({});
 				</div>
 				<div className="col-12 col-md-9 col-lg-9">
 					<div className="wf_container-profile--right">
-						<p>Hitlar Machahary <Speaker/> </p>
-						<p className="wf_name_designation">{"Work Title here"}</p>						
+						<p>
+							Hitlar Machahary <Speaker />{" "}
+						</p>
+						<p className="wf_name_designation">{"Work Title here"}</p>
 						<div className="wf-information-margin-top">
-						<p>{"Joined on - 2022"}</p>
+							<p>{"Joined on - 2022"}</p>
 						</div>
-						<Horizontal />												
+						<Horizontal />
 						<div className="wf-about-me-margin-top">
-						<p>About Me:</p>
-						<p className="wf-information-margin-top wf-about-me-subheading">{"'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'"}</p>
+							<p>About Me:</p>
+							<p className="wf-information-margin-top wf-about-me-subheading">
+								{
+									"'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'"
+								}
+							</p>
 						</div>
 						<Horizontal />
-						<div className="wf_container-profile--right-sub wf-about-me-margin-top-phone">												
-						<div className="wf_profile-heading">
-							<h4>Phone:</h4>
-							<p className="">9517538500</p>							
+						<div className="wf_container-profile--right-sub wf-about-me-margin-top-phone">
+							<div className="wf_profile-heading">
+								<h4>Phone:</h4>
+								<p className="">9517538500</p>
+							</div>
+							<Horizontal />
+							<div className="wf_profile-heading wf-about-me-margin-top-address">
+								<h4>Address:</h4>
+								<div className="wf-address-width">
+									<p>
+										{
+											"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+										}
+									</p>
+								</div>
+							</div>
+							<Horizontal />
+							<div className="wf_profile-heading wf-about-me-margin-top-address">
+								<h4>Hoobies/Clubs:</h4>
+								<div className="wf-address-width">
+									<p>
+										{
+											"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+										}
+									</p>
+								</div>
+							</div>
 						</div>
-						<Horizontal />						
-						<div className="wf_profile-heading wf-about-me-margin-top-address">
-							<h4>Address:</h4>
-							<div className="wf-address-width">
-							<p>{"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"}</p>
-							</div>	
-						</div>
-						<Horizontal />
-						<div className="wf_profile-heading wf-about-me-margin-top-address">
-							<h4>Hoobies/Clubs:</h4>
-							<div className="wf-address-width">
-							<p>{"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"}</p>
-							</div>	
-						</div>
-					</div>
 					</div>
 				</div>
 			</div>

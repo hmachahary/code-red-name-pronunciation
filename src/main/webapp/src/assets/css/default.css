@@ -162,8 +162,8 @@ body {
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-:root {
-	/* --bs-blue: #0d6efd;
+/* :root { */
+/* --bs-blue: #0d6efd;
 	--bs-indigo: #6610f2;
 	--bs-purple: #6f42c1;
 	--bs-pink: #d63384;
@@ -217,7 +217,7 @@ body {
 	--bs-body-line-height: 1.5;
 	--bs-body-color: #212529;
 	--bs-body-bg: #fff; */
-}
+/* } */
 .container,
 .container-fluid,
 .container-lg,
@@ -4088,4 +4088,3 @@ body {
 		display: none !important;
 	}
 }
-/*# sourceMappingURL=bootstrap-grid.min.css.map */
