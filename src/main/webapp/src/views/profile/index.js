@@ -117,26 +117,6 @@ export default function Profile() {
 						<div className="wf_profile-content">
 							<p>Painting, Travel</p>
 						</div>
-						<div className="wf_container-profile--right-sub">
-							<div className="action_btn">
-								<button
-									className="action_btn_primary"
-									name="optIn"
-									disabled={!optOut}
-									onClick={(e) => optOutAction(e)}
-								>
-									Opt In
-								</button>
-								<button
-									className="action_btn_danger"
-									name="optOut"
-									disabled={optOut}
-									onClick={(e) => optOutAction(e)}
-								>
-									Opt Out
-								</button>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>

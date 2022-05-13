@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
@@ -31,26 +31,20 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-package com.example.codered.namepronounciation.util;
+package com.example.codered.namepronounciation.ttsCore;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.net.URLEncoder;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.net.ssl.HttpsURLConnection;
 
-/*
-     * This class demonstrates how to get a valid O-auth token from
-     * Azure Data Market.
-     */
 public class Authentication
 {
-    public static final String AccessTokenUri = "https://eastus.api.cognitive.microsoft.com/sts/v1.0/issueToken";
+    public static final String AccessTokenUri = "https://eastus.api.cognitive.microsoft.com/sts/v1.0/issuetoken";
 
     private String apiKey;
     private String accessToken;

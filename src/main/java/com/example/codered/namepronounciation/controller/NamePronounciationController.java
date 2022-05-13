@@ -1,19 +1,22 @@
 package com.example.codered.namepronounciation.controller;
 
-import com.example.codered.namepronounciation.dbEntity.TestTable;
+import com.example.codered.namepronounciation.dbEntity.UserDetails;
+import com.example.codered.namepronounciation.dbEntity.UserLogin;
 import com.example.codered.namepronounciation.repository.TestTableRepository;
-import com.example.codered.namepronounciation.util.XmlDom;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import com.example.codered.namepronounciation.repository.UserDetailsRepository;
+import com.example.codered.namepronounciation.repository.UserLoginRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import com.example.codered.namepronounciation.ttsCore.*;
+
+
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -23,52 +26,88 @@ public class NamePronounciationController {
     private TestTableRepository repo;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private UserLoginRepository userLoginRepository;
 
-    private final String accessToken_API = "https://eastus.api.cognitive.microsoft.com/sts/v1.0/issuetoken";
-    private final String textToSpeechUri = "https://eastus.tts.speech.microsoft.com/cognitiveservices/v1";
-    private String accessToken;
+    @Autowired
+    private UserDetailsRepository userDetailsRepository;
 
-    @PostMapping("/save")
-    public ResponseEntity<TestTable> saveProfile(@RequestBody TestTable testTable){
-        return ResponseEntity.ok(repo.save(testTable));
+    @PostMapping("/saveLoginName&Pass")
+    public ResponseEntity<UserLogin> saveLogin(@RequestBody UserLogin userLogin){
+        return ResponseEntity.ok(userLoginRepository.save(userLogin));
+    }
+
+    @PostMapping("/saveUserDetails")
+    public ResponseEntity<UserDetails> saveProfile(@RequestBody UserDetails userDetails){
+        return ResponseEntity.ok(userDetailsRepository.save(userDetails));
     }
 
     @GetMapping("/fetch/all")
-    public List<TestTable> fetchAll(){
-        return repo.findAll();
+    public List<UserDetails> fetchAllUserDetails(){
+        return userDetailsRepository.findAll();
     }
 
-    @GetMapping(value = "/getAccessToken")
-    public String getAccessToken(String apiKey) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Ocp-Apim-Subscription-Key", "0c2055679b3e4653aa7572adb1746cec");
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
-        String result = restTemplate.getForObject(accessToken_API, String.class);
-        System.out.println(result);
-        return restTemplate.exchange(accessToken_API, HttpMethod.GET, entity, String.class).getBody();
+   private final String accessToken_API = "https://eastus.api.cognitive.microsoft.com/sts/v1.0/issuetoken";
+    private final String textToSpeechUri = "https://eastus.tts.speech.microsoft.com/cognitiveservices/v1";
+    private String accessToken;
 
-    }
+    @GetMapping(value = "/getPronunciation")
+    public void getPronunciation(@RequestParam("locale") String locale, @RequestParam ("name") String textToSynthesize) {
+        //String textToSynthesize = "good";
+        String outputFormat = AudioOutputFormat.Riff24Khz16BitMonoPcm;
+        //String deviceLanguage = "en-US";
+        String genderName = Gender.Male;
+        String voiceName = "en-US-ChristopherNeural"; // Short name for "Microsoft Server Speech Text to Speech Voice (en-US, Guy24KRUS)"
 
-    @PostMapping(value = "/getPronunciation")
-    public byte[] getPronunciation(String locale, String genderName, String voiceName, String textToSynthesize, String outputFormat, String accessToken) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Ocp-Apim-Subscription-Key", "0c2055679b3e4653aa7572adb1746cec");
-        headers.set("Content-Type", "application/ssml+xml");
-        headers.set("X-Microsoft-OutputFormat", outputFormat);
-        headers.set("Authorization", "Bearer " + accessToken);
-        headers.set("Accept", "*/*");
+        try {
+            byte[] audioBuffer = TTSService.Synthesize(textToSynthesize, outputFormat, locale, genderName, voiceName);
 
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
+            // write the pcm data to the file
+            String outputWave = ".\\output.pcm";
+            File outputAudio = new File(outputWave);
+            FileOutputStream fstream = new FileOutputStream(outputAudio);
+            fstream.write(audioBuffer);
+            fstream.flush();
+            fstream.close();
+            //return audioBuffer;
 
+            //specify the audio format
+            AudioFormat audioFormat = new AudioFormat(
+                    AudioFormat.Encoding.PCM_SIGNED,
+                    24000,
+                    16,
+                    1,
+                    1 * 2,
+                    24000,
+                    false);
 
-        String body = XmlDom.createDom(locale, genderName, voiceName, textToSynthesize);
-        byte[] bytes = body.getBytes();
-        headers.set("content-length", String.valueOf(bytes.length));
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(outputWave));
 
-        HttpEntity<String> request = new HttpEntity<String>(body, headers);
+            DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class,
+                    audioFormat, AudioSystem.NOT_SPECIFIED);
+            SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem
+                    .getLine(dataLineInfo);
+            sourceDataLine.open(audioFormat);
+            sourceDataLine.start();
+            System.out.println("start to play the wave:");
 
-        return restTemplate.exchange(
-                textToSpeechUri, HttpMethod.POST, request, byte[].class).getBody();
+             /* read the audio data and send to mixer*/
+
+            int count;
+            byte tempBuffer[] = new byte[4096];
+            while ((count = audioInputStream.read(tempBuffer, 0, tempBuffer.length)) >0) {
+                sourceDataLine.write(tempBuffer, 0, count);
+            }
+
+            sourceDataLine.drain();
+            sourceDataLine.close();
+            audioInputStream.close();
+
+        }catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
