@@ -1,7 +1,10 @@
 package com.example.codered.namepronounciation.controller;
 
-import com.example.codered.namepronounciation.dbEntity.TestTable;
+import com.example.codered.namepronounciation.dbEntity.UserDetails;
+import com.example.codered.namepronounciation.dbEntity.UserLogin;
 import com.example.codered.namepronounciation.repository.TestTableRepository;
+import com.example.codered.namepronounciation.repository.UserDetailsRepository;
+import com.example.codered.namepronounciation.repository.UserLoginRepository;
 import com.example.codered.namepronounciation.util.XmlDom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -23,29 +26,40 @@ public class NamePronounciationController {
     private TestTableRepository repo;
 
     @Autowired
+    private UserLoginRepository userLoginRepository;
+
+    @Autowired
+    private UserDetailsRepository userDetailsRepository;
+
+    @Autowired
     private RestTemplate restTemplate;
 
-    private final String accessToken_API = "https://eastus.api.cognitive.microsoft.com/sts/v1.0/issuetoken";
-    private final String textToSpeechUri = "https://eastus.tts.speech.microsoft.com/cognitiveservices/v1";
+    private final String accessToken_API = "https://centralindia.api.cognitive.microsoft.com/sts/v1.0/issuetoken";
+    private final String textToSpeechUri = "https://centralindia.tts.speech.microsoft.com/cognitiveservices/v1";
     private String accessToken;
 
-    @PostMapping("/save")
-    public ResponseEntity<TestTable> saveProfile(@RequestBody TestTable testTable){
-        return ResponseEntity.ok(repo.save(testTable));
+    @PostMapping("/saveLoginName&Pass")
+    public ResponseEntity<UserLogin> saveLogin(@RequestBody UserLogin userLogin){
+        return ResponseEntity.ok(userLoginRepository.save(userLogin));
+    }
+
+    @PostMapping("/saveUserDetails")
+    public ResponseEntity<UserDetails> saveProfile(@RequestBody UserDetails userDetails){
+        return ResponseEntity.ok(userDetailsRepository.save(userDetails));
     }
 
     @GetMapping("/fetch/all")
-    public List<TestTable> fetchAll(){
-        return repo.findAll();
+    public List<UserDetails> fetchAllUserDetails(){
+        return userDetailsRepository.findAll();
     }
 
     @GetMapping(value = "/getAccessToken")
     public String getAccessToken(String apiKey) {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Ocp-Apim-Subscription-Key", "0c2055679b3e4653aa7572adb1746cec");
+        headers.set("Ocp-Apim-Subscription-Key", "a284484f3d774c5b82b9b9dce940b6db");
         HttpEntity<String> entity = new HttpEntity<String>(headers);
-        String result = restTemplate.getForObject(accessToken_API, String.class);
-        System.out.println(result);
+//        String result = restTemplate.getForObject(accessToken_API, String.class);
+//        System.out.println(result);
         return restTemplate.exchange(accessToken_API, HttpMethod.GET, entity, String.class).getBody();
 
     }
@@ -53,7 +67,7 @@ public class NamePronounciationController {
     @PostMapping(value = "/getPronunciation")
     public byte[] getPronunciation(String locale, String genderName, String voiceName, String textToSynthesize, String outputFormat, String accessToken) {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Ocp-Apim-Subscription-Key", "0c2055679b3e4653aa7572adb1746cec");
+        headers.set("Ocp-Apim-Subscription-Key", "a284484f3d774c5b82b9b9dce940b6db");
         headers.set("Content-Type", "application/ssml+xml");
         headers.set("X-Microsoft-OutputFormat", outputFormat);
         headers.set("Authorization", "Bearer " + accessToken);
