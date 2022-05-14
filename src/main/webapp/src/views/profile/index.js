@@ -24,13 +24,12 @@ export default function Profile() {
 				hobbies: response.data.hobbies,
 				work: response.data.work,
 				optOut: response.data.optOut,
-				skills:response.data.skills,
-				username:response.data.username
-			}
+				skills: response.data.skills,
+				username: response.data.username,
+			};
 			if (response.status === 200) {
 				setuserdetails(userInfo);
 			} else {
-				
 				setuserdetails(userInfo);
 			}
 		})();
@@ -61,16 +60,12 @@ export default function Profile() {
 							<h4>WORK</h4>
 							<Horizontal />
 						</div>
-						<div className="wf_profile-content">
-							{userdetails.work}
-						</div>
+						<div className="wf_profile-content">{userdetails.work}</div>
 						<div className="wf_profile-heading">
 							<h4>SKILLS</h4>
 							<Horizontal />
 						</div>
-						<div className="wf_profile-content">
-						{userdetails.skills}
-						</div>
+						<div className="wf_profile-content">{userdetails.skills}</div>
 					</div>
 				</div>
 				<div className="col-12 col-md-9 col-lg-9">
