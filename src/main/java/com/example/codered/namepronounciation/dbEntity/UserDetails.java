@@ -4,10 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.sql.Blob;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 @Entity
 @Table(name = "T_USER_DETAILS")
@@ -25,8 +22,6 @@ public class UserDetails {
     private String officeAddress;
     @Column(name = "RESEDENTIAL_ADDRESS")
     private String resedentialAddress;
-    @Column(name = "VOICE_NOTE")
-    private Blob voiceNote;
     @Column(name = "PHONE")
     private String phone;
     @Column(name = "SKILLS")
@@ -35,6 +30,12 @@ public class UserDetails {
     private Date dob;
     @Column(name = "DESIGNATION")
     private String designation;
+    @Column(name= "CREATED_TS")
+    private Date createdAt;
+    @Column(name= "MODIFIED_TS")
+    private Date modifiedAt;
+    @Column(name= "MODIFIED_BY")
+    private Date modifiedBy;
 
     public String getEmpId() {
         return empId;
@@ -84,14 +85,6 @@ public class UserDetails {
         this.resedentialAddress = resedentialAddress;
     }
 
-    public Blob getVoiceNote() {
-        return voiceNote;
-    }
-
-    public void setVoiceNote(Blob voiceNote) {
-        this.voiceNote = voiceNote;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -124,4 +117,27 @@ public class UserDetails {
         this.designation = designation;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
+    public Date getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(Date modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
 }
