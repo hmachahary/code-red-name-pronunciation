@@ -6,4 +6,13 @@ import lombok.Data;
 public class LoginResponse {
     private String email;
     private boolean isAdmin;
+    private boolean isAuthenticated;
+
+    public boolean isAuthenticated() {
+        return isAuthenticated;
+    }
+
+    public void setAuthenticated(boolean authenticated) {
+        isAuthenticated = authenticated;
+    }
 }
