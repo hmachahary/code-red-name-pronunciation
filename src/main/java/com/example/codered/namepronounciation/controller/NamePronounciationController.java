@@ -4,6 +4,7 @@ import com.example.codered.namepronounciation.dbEntity.UserDetails;
 import com.example.codered.namepronounciation.repository.TestTableRepository;
 import com.example.codered.namepronounciation.repository.UserDetailsRepository;
 
+import com.example.codered.namepronounciation.service.NamePronounciationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -22,21 +24,14 @@ import java.util.List;
 public class NamePronounciationController {
 
     @Autowired
-    private TestTableRepository repo;
-
-//    @Autowired
-//    private UserLoginRepository userLoginRepository;
-
-    @Autowired
     private UserDetailsRepository userDetailsRepository;
 
-//    @PostMapping("/saveLoginName&Pass")
-//    public ResponseEntity<UserLogin> saveLogin(@RequestBody UserLogin userLogin){
-//        return ResponseEntity.ok(userLoginRepository.save(userLogin));
-//    }
+    @Autowired
+    private NamePronounciationService namePronounciationService;
 
     @PostMapping("/saveUserDetails")
     public ResponseEntity<UserDetails> saveProfile(@RequestBody UserDetails userDetails){
+        userDetails.setEmail(userDetails.getEmail().toLowerCase());
         return ResponseEntity.ok(userDetailsRepository.save(userDetails));
     }
 
@@ -109,4 +104,13 @@ public class NamePronounciationController {
             throw new RuntimeException(e);
         }
     }
+
+
+    @PostMapping("/editPronounciation")
+    public ResponseEntity<String> editPronounciation(String email, byte[] audioBuffer) throws SQLException {
+        namePronounciationService.editPronounciation(email, audioBuffer);
+
+        return ResponseEntity.ok("Voice updated Successfully");
+    }
+
 }
