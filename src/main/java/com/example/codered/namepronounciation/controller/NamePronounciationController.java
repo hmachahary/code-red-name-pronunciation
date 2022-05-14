@@ -35,11 +35,6 @@ public class NamePronounciationController {
         return ResponseEntity.ok(userDetailsRepository.save(userDetails));
     }
 
-    @GetMapping("/fetch/all")
-    public List<UserDetails> fetchAllUserDetails(){
-        return userDetailsRepository.findAll();
-    }
-
    private final String accessToken_API = "https://eastus.api.cognitive.microsoft.com/sts/v1.0/issuetoken";
     private final String textToSpeechUri = "https://eastus.tts.speech.microsoft.com/cognitiveservices/v1";
     private String accessToken;
