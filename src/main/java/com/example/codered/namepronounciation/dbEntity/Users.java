@@ -1,17 +1,33 @@
 package com.example.codered.namepronounciation.dbEntity;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="LoginInfo")
-public class UserLogin {
+@Table(name="T_USERS")
+public class Users {
     @Id
+    @Email
+    @NotBlank(message = "Email is required")
     private String email;
+    @UniqueElements
+    @NotBlank(message = "Employee ID is required")
+    private String empID;
+    @NotBlank(message = "Password is required")
     private String password;
+    @NotNull(message = "Admin flag is required")
     private boolean isAdmin;
-    private boolean isOptedOut;
+
+    public String getEmpID() {return empID;}
+
+    public void setEmpID(String empID) {this.empID = empID;}
+
     public String getEmail() {
         return email;
     }
@@ -34,13 +50,5 @@ public class UserLogin {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
-    }
-
-    public boolean isOptedOut() {
-        return isOptedOut;
-    }
-
-    public void setOptedOut(boolean optedOut) {
-        isOptedOut = optedOut;
     }
 }
