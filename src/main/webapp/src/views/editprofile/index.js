@@ -11,15 +11,17 @@ export default function EditProfile() {
 	const [record, setRecord] = useState(false);
 	const [optOut, setOptOut] = useState(false);
 	const [formData, setFormData] = useState({
+					empId : {value:"", error:""},
 					designation : {value:"", error:""},
 					about: {value:"", error:""},
 					email: {value:"", error:""},
 					phone: {value:"", error:""},
-					addressResident: {value:"", error:""},
+					resedentialAddress: {value:"", error:""},
 					hobbies: {value:"", error:""},
-					work: {value:"", error:""},
+					officeAddress: {value:"", error:""},
 					skills: {value:"", error:""},
-					username:{value:"", error:""}
+					name:{value:"", error:""},
+					country:{value:"", error:""}
 	});
 
 	const handleTextChange = (e) =>{
@@ -34,31 +36,34 @@ export default function EditProfile() {
 			const response = await getLoggedInUserDetails(JSON.stringify(userData.username));
 			debugger
 			const userInfo = {
+				empId: response.data.empId,
 				designation: response.data.designation,
 				about: response.data.about,
 				email: response.data.email,
 				phone: response.data.phone,
-				addressResident: response.data.addressResident,
+				resedentialAddress: response.data.resedentialAddress,
 				hobbies: response.data.hobbies,
-				work: response.data.work,
+				officeAddress: response.data.officeAddress,
 				optOut: response.data.optOut,
-				skills:response.data.skills,
-				username:response.data.username
-			}
+				skills: response.data.skills,
+				name: response.data.name,
+				country:response.data.country
+			};
 			if (response.status === 200) {
 				setFormData();	
 			} else {
 				setFormData({				
 						...formData,
-							username:{value:userInfo.username, error:""},						
+							name:{value:userInfo.name, error:""},						
 							about: {value:userInfo.about, error:""},
 							designation: {value:userInfo.designation, error:""},
 							email: {value:userInfo.email, error:""},
 							phone: {value:userInfo.phone, error:""},
-							addressResident: {value:userInfo.addressResident, error:""},
+							resedentialAddress: {value:userInfo.resedentialAddress, error:""},
 							hobbies: {value:userInfo.hobbies, error:""},
-							work: {value:userInfo.work, error:""},							
-							skills:{value:userInfo.skills, error:""}
+							officeAddress: {value:userInfo.officeAddress, error:""},							
+							skills:{value:userInfo.skills, error:""},
+							country:{value:userInfo.country, error:""}
 						}								
 				);
 				debugger					
@@ -97,7 +102,7 @@ console.log(formData)
 									type="text" 
                                     className="form-control" 
 									onChange={e=> handleTextChange(e)}
-                                    value={formData.work.value}>
+                                    value={formData.officeAddress.value}>
                         </input>
 							
 						</div>
@@ -118,7 +123,7 @@ console.log(formData)
 				<div className="col-12 col-md-9 col-lg-9">
 					<div className="wf_container-profile--right">
 						<h1 className="wf_profile-name">
-							{formData.username.value}
+							{formData.name.value}
 							<Link to="">Edit profile</Link>
 						</h1>
 						<h2 className="wf_profie-syllables">
@@ -189,7 +194,7 @@ console.log(formData)
 									type="text" 
                                     className="form-control" 
 									onChange={e=> handleTextChange(e)}
-                                    value={formData.addressResident.value}>
+                                    value={formData.resedentialAddress.value}>
                         </input>
 						</div>
 						<div className="wf_profile-heading">
@@ -207,6 +212,7 @@ console.log(formData)
 						<div className="wf_container-profile--right-sub">
 							<div className="action_btn">
 								<button
+									title="Opt In Name Pronounciation"
 									className="action_btn_primary"
 									name="optIn"
 									disabled={!optOut}
@@ -215,6 +221,7 @@ console.log(formData)
 								</button>
 								<button
 									className="action_btn_danger"
+									title="Opt Out from Name Pronounciation"
 									name="optOut"
 									disabled={optOut}
 									onClick={(e) => optOutAction(e)}>

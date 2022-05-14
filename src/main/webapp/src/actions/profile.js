@@ -5,20 +5,24 @@ api.defaults.baseURL = ""; // URL here...
 const headers = {"Content-Type": "applictation/json"};
 
 const userDetails = {    
+        empId: "U7890",
         designation:"Senior Software Engineer" ,
         about: "This is me...",
         email: "email@email.com",
         phone: "+919638527412",
-        addressResident: "Home Address",
+        resedentialAddress: "Home Address",
         hobbies: "Playing Badminton",
-        work: "Office address",
+        officeAddress: "Office address",
         skills: "Java, React, HTML",
         optOut: false,
-        username:"Hitlar Machahry"
+        name:"Hitlar Machahry",
+        country:"USA",
+        voiceNote:null,
+
 }
 
-export const getLoggedInUserDetails = async(data) =>{
-return api.post("url here", data, {headers: headers})
+export const getLoggedInUserDetails = async(emailId) =>{
+return api.get("/api/v1/users/findByEmail?email="+emailId, {headers: headers})
 .then(response => {
     if(response.status === 200){
         return {

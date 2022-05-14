@@ -13,19 +13,22 @@ export default function Profile() {
 
 	useEffect(() => {
 		(async () => {
+			debugger
 			const userData = JSON.parse(sessionStorage.userdata);
 			const response = await getLoggedInUserDetails(JSON.stringify(userData.username));
 			const userInfo = {
+				empId: response.data.empId,
 				designation: response.data.designation,
 				about: response.data.about,
 				email: response.data.email,
 				phone: response.data.phone,
-				addressResident: response.data.addressResident,
+				resedentialAddress: response.data.resedentialAddress,
 				hobbies: response.data.hobbies,
-				work: response.data.work,
+				officeAddress: response.data.officeAddress,
 				optOut: response.data.optOut,
 				skills: response.data.skills,
-				username: response.data.username,
+				name: response.data.name,
+				country:response.data.country
 			};
 			if (response.status === 200) {
 				setuserdetails(userInfo);
@@ -60,7 +63,7 @@ export default function Profile() {
 							<h4>WORK</h4>
 							<Horizontal />
 						</div>
-						<div className="wf_profile-content">{userdetails.work}</div>
+						<div className="wf_profile-content">{userdetails.officeAddress}</div>
 						<div className="wf_profile-heading">
 							<h4>SKILLS</h4>
 							<Horizontal />
@@ -71,8 +74,8 @@ export default function Profile() {
 				<div className="col-12 col-md-9 col-lg-9">
 					<div className="wf_container-profile--right">
 						<h1 className="wf_profile-name">
-							{userdetails.username}
-							<Link to="edit">Edit profile</Link>
+							{userdetails.name}
+							<Link to="/profile/edit">Edit profile</Link>
 						</h1>
 						<h2 className="wf_profie-syllables">
 							<span>(Hit-lar Ma-cha-hary)</span>
@@ -110,7 +113,7 @@ export default function Profile() {
 							<Horizontal />
 						</div>
 						<div className="wf_profile-content">
-							<p>{userdetails.addressResident}</p>
+							<p>{userdetails.resedentialAddress}</p>
 						</div>
 						<div className="wf_profile-heading">
 							<h4>HOBBIES/CLUBS</h4>
