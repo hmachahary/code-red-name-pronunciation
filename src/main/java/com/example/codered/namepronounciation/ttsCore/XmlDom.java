@@ -31,7 +31,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-package com.example.codered.namepronounciation.util;
+package com.example.codered.namepronounciation.ttsCore;
 
 import java.io.StringWriter;
 
