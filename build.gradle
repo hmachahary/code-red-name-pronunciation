@@ -55,6 +55,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-validation:2.3.1.RELEASE'
 }
 
 dependencyManagement {
@@ -126,7 +127,7 @@ task createCheckpointFile{
 		def checkpoint = "${rootProject.name}-${version}"
 		def TODAY_DT_US = ZonedDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-yy hh:mm:ss a z"))
 		String fileContent = "BUILD_CHECKPOINT:${checkpoint}\nBUILD TSTAMP: ${TODAY_DT_US}\nBUILD_DIR: $projectDir"
-		new File("${buildDir}/${rrootProject.name}.checkpoint").write(fileContent)
+		new File("${buildDir}/${rootProject.name}.checkpoint").write(fileContent)
 	}
 }
 
