@@ -1,10 +1,8 @@
 package com.example.codered.namepronounciation.controller;
 
 import com.example.codered.namepronounciation.dbEntity.UserDetails;
-import com.example.codered.namepronounciation.dbEntity.UserLogin;
 import com.example.codered.namepronounciation.repository.TestTableRepository;
 import com.example.codered.namepronounciation.repository.UserDetailsRepository;
-import com.example.codered.namepronounciation.repository.UserLoginRepository;
 
 import com.example.codered.namepronounciation.service.NamePronounciationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,22 +24,10 @@ import java.util.List;
 public class NamePronounciationController {
 
     @Autowired
-    private TestTableRepository repo;
-
-    @Autowired
-    private UserLoginRepository userLoginRepository;
-
-    @Autowired
     private UserDetailsRepository userDetailsRepository;
 
     @Autowired
     private NamePronounciationService namePronounciationService;
-
-    @PostMapping("/saveLoginName&Pass")
-    public ResponseEntity<UserLogin> saveLogin(@RequestBody UserLogin userLogin){
-        userLogin.setEmail(userLogin.getEmail().toLowerCase());
-        return ResponseEntity.ok(userLoginRepository.save(userLogin));
-    }
 
     @PostMapping("/saveUserDetails")
     public ResponseEntity<UserDetails> saveProfile(@RequestBody UserDetails userDetails){

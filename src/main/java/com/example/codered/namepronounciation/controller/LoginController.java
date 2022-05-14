@@ -1,6 +1,6 @@
 package com.example.codered.namepronounciation.controller;
 
-import com.example.codered.namepronounciation.dbEntity.UserLogin;
+import com.example.codered.namepronounciation.model.LoginRequest;
 import com.example.codered.namepronounciation.model.LoginResponse;
 import com.example.codered.namepronounciation.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticateUser(@RequestBody UserLogin request) {
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest request) {
         try{
             LoginResponse loginResponse = loginService.authenticateUser(request);
             return new ResponseEntity<>(loginResponse, HttpStatus.OK);
