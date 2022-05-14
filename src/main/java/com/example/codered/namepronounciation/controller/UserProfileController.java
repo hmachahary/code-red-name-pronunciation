@@ -1,8 +1,6 @@
 package com.example.codered.namepronounciation.controller;
 
 import com.example.codered.namepronounciation.dbEntity.UserDetails;
-import com.example.codered.namepronounciation.dbEntity.UserLogin;
-import com.example.codered.namepronounciation.model.LoginResponse;
 import com.example.codered.namepronounciation.repository.UserDetailsRepository;
 import com.example.codered.namepronounciation.repository.UserLoginRepository;
 import org.springframework.beans.BeanUtils;
@@ -18,18 +16,6 @@ public class UserProfileController {
 
     @Autowired
     private UserDetailsRepository userDetailsRepo;
-
-//    @PostMapping("/login")
-//    public LoginResponse loginDetails(@RequestBody UserLogin request) throws IllegalAccessException {
-//        UserLogin userInDb = loginRepo.findById(request.getEmail()).orElse(new UserLogin());
-//        if(request.getPassword().equals(userInDb.getPassword())){
-//            LoginResponse loginResponse = new LoginResponse();
-//            BeanUtils.copyProperties(userInDb,loginResponse);
-//            return loginResponse;
-//        }
-//        else
-//            throw new IllegalAccessException("Invalid user email or password");
-//    }
 
      @PostMapping("/edit")
     public UserDetails editUserDetails(){
