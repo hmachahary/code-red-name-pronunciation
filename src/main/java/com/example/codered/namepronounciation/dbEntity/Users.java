@@ -16,7 +16,6 @@ public class Users {
     @Email
     @NotBlank(message = "Email is required")
     private String email;
-    @UniqueElements
     @NotBlank(message = "Employee ID is required")
     private String empID;
     @NotBlank(message = "Password is required")
