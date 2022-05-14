@@ -7,7 +7,6 @@ export default function Header() {
 	const [show, setShow] = useState(false);
 	const ref = useRef();
 	const location = useLocation();
-	console.log("location", location);
 	useEffect(() => {
 		document.addEventListener("click", handleClick);
 

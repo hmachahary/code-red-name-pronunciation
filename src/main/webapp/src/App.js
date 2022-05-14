@@ -1,5 +1,5 @@
-import { Routes, Route } from "react-router-dom";
-import { Suspense } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { Suspense, useEffect } from "react";
 import { routes } from "./routes";
 import { Header, Footer, Spinner } from "./components";
 import "./assets/css/bootstrap.min.css";
@@ -7,6 +7,14 @@ import "./assets/css/default.css";
 import "./App.css";
 
 function App() {
+	const navigate = useNavigate();
+	const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+	useEffect(() => {
+		if (!userInfo) {
+			navigate("/login");
+		}
+	}, [userInfo]);
+
 	return (
 		<div className="wf_layout">
 			<Header />

@@ -7,12 +7,10 @@ import com.example.codered.namepronounciation.repository.UserDetailsRepository;
 import com.example.codered.namepronounciation.repository.UserLoginRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/v1/users")
 public class UserProfileController {
 
     @Autowired
@@ -21,17 +19,17 @@ public class UserProfileController {
     @Autowired
     private UserDetailsRepository userDetailsRepo;
 
-    @PostMapping("/login")
-    public LoginResponse loginDetails(@RequestBody UserLogin request) throws IllegalAccessException {
-        UserLogin userInDb = loginRepo.findById(request.getEmail()).orElse(new UserLogin());
-        if(request.getPassword().equals(userInDb.getPassword())){
-            LoginResponse loginResponse = new LoginResponse();
-            BeanUtils.copyProperties(userInDb,loginResponse);
-            return loginResponse;
-        }
-        else
-            throw new IllegalAccessException("Invalid user email or password");
-    }
+//    @PostMapping("/login")
+//    public LoginResponse loginDetails(@RequestBody UserLogin request) throws IllegalAccessException {
+//        UserLogin userInDb = loginRepo.findById(request.getEmail()).orElse(new UserLogin());
+//        if(request.getPassword().equals(userInDb.getPassword())){
+//            LoginResponse loginResponse = new LoginResponse();
+//            BeanUtils.copyProperties(userInDb,loginResponse);
+//            return loginResponse;
+//        }
+//        else
+//            throw new IllegalAccessException("Invalid user email or password");
+//    }
 
      @PostMapping("/edit")
     public UserDetails editUserDetails(){
