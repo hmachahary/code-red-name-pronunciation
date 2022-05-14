@@ -5,12 +5,16 @@ import com.example.codered.namepronounciation.model.LoginResponse;
 import com.example.codered.namepronounciation.repository.UserDetailsRepository;
 import com.example.codered.namepronounciation.repository.UserLoginRepository;
 import com.example.codered.namepronounciation.service.LoginService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class LoginServiceImpl implements LoginService {
+
     @Autowired
     private UserLoginRepository loginRepo;
 
@@ -22,6 +26,7 @@ public class LoginServiceImpl implements LoginService {
         if(userRequest.getPassword().equals(userInDb.getPassword())){
             LoginResponse loginResponse = new LoginResponse();
             BeanUtils.copyProperties(userInDb,loginResponse);
+            loginResponse.setAuthenticated(true);
             return loginResponse;
         }else{
             throw new IllegalAccessException("Invalid user email or password");
