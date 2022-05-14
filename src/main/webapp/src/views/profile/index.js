@@ -12,15 +12,15 @@ export default function Profile() {
 	const [optOut, setOptOut] = useState(false);
 
 	useEffect(() => {
-		(async () => {
-			const userData = JSON.parse(sessionStorage.userdata);
-			const response = await getLoggedInUserDetails(JSON.stringify(userData.username));
-			if (response.status === 200) {
-				setuserdetails(userData);
-			} else {
-				setuserdetails(userData);
-			}
-		})();
+		// (async () => {
+		// 	const userData = JSON.parse(sessionStorage.userdata);
+		// 	const response = await getLoggedInUserDetails(JSON.stringify(userData.username));
+		// 	if (response.status === 200) {
+		// 		setuserdetails(userData);
+		// 	} else {
+		// 		setuserdetails(userData);
+		// 	}
+		// })();
 
 		return () => {
 			// this now gets called when the component unmounts
