@@ -3,3 +3,10 @@
 	text-transform: uppercase;
 	text-decoration: underline;
 }
+
+.wf_No-records{
+	margin-left: 50%;
+	font-size: 2rem !important;
+	color: #d71e28;
+	margin-top: 50% !important;
+}

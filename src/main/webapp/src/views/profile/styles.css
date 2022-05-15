@@ -68,3 +68,20 @@
 .wf_container-profile--right .wf_profile-content p {
 	margin-bottom: 0.8rem;
 }
+
+.wf_search-text-width{
+	width: 30%;
+	margin-left: 50%;
+
+}
+
+.wf_search-text-search{
+	width: 20% !important;
+	margin-left: 50%;
+}
+
+.email-msg{
+    margin-left: 80%;
+    font-size: 1.2rem;
+    color: #d71e28;
+}
