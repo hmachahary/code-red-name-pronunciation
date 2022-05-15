@@ -37,6 +37,5 @@ export default function AudioRecorder({ record, onData, onStop, startRecording, 
 
 AudioRecorder.propTypes = {
 	record: PropTypes.bool.isRequired,
-	onData: PropTypes.func.isRequired,
 	onStop: PropTypes.func.isRequired,
 };

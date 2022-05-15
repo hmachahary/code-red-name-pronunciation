@@ -67,3 +67,8 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	font-size: 1.33333rem;
 }
+
+.form-control {
+	font-size: 1.33333rem;
+	padding: 0.5rem 0.8rem;
+}

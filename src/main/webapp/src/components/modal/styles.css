@@ -1,0 +1,29 @@
+.tab-pane {
+	padding-top: 1.2rem;
+	padding-bottom: 1.2rem;
+}
+.modal .form-group {
+	margin-bottom: 1.2rem;
+	margin-top: 1.2rem;
+}
+.modal .form-group label {
+	margin-bottom: 0.6rem;
+}
+.tab-pane .play-icon {
+	font-size: 1.4rem;
+}
+.tab-pane .play-icon svg {
+	fill: #fff;
+}
+.tab-pane .play-icon svg:hover {
+	cursor: pointer;
+}
+
+.tab-pane .play-icon button:hover {
+	background: #da343c;
+}
+
+.tab-pane .play-icon button:active,
+.tab-pane .play-icon button:focus {
+	background: #da343c;
+}

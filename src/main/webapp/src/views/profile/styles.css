@@ -43,6 +43,10 @@
 	font-size: 2.2rem;
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
+}
+.wf_container-profile--right .wf_profile-name span {
+	flex: 2;
 }
 .wf_container-profile--right .wf_profile-name a {
 	font-size: 1.4rem;
@@ -69,19 +73,17 @@
 	margin-bottom: 0.8rem;
 }
 
-.wf_search-text-width{
-	width: 30%;
-	margin-left: 50%;
-
+.wf_search-text-width {
+	flex: 1;
 }
 
-.wf_search-text-search{
+.wf_search-text-search {
 	width: 20% !important;
 	margin-left: 50%;
 }
 
-.email-msg{
-    margin-left: 80%;
-    font-size: 1.2rem;
-    color: #d71e28;
+.email-msg {
+	margin-left: 80%;
+	font-size: 1.2rem;
+	color: #d71e28;
 }
