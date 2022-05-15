@@ -5,7 +5,7 @@ api.defaults.baseURL = ""; // URL here...
 const headers = {"Content-Type": "applictation/json"};
 
 export const getLoggedInUserDetails = async(emailId) =>{
-return api.get("http://localhost:8080/api/v1/users/findByEmail?email="+emailId, {headers: headers})
+return api.get("http://localhost:8080/api/v1/users/"+emailId, {headers: headers})
 .then(response => {
     if(response.status === 200){
         return {
@@ -23,8 +23,8 @@ return api.get("http://localhost:8080/api/v1/users/findByEmail?email="+emailId, 
     );
 }
 
-export const updateUserDetails = async(data) =>{    
-    return api.post("http://localhost:8080/api/v1/saveUserDetails", data, {headers: headers})
+export const updateUserDetails = async(data, email) =>{    
+    return api.put("http://localhost:8080/api/v1/users/"+email, data, {headers: headers})
     .then(response => {
         if(response.status === 200){
             return {
