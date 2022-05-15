@@ -8,7 +8,7 @@ import { Button } from "../../components";
 
 export default function Employees() {
 	const navigate = useNavigate();
-	const [employees, setEmployees] = useState({});
+	const [employees, setEmployees] = useState([]);
 
 	useEffect(() => {
 		(async () => {
@@ -23,9 +23,13 @@ export default function Employees() {
 		};
 	}, []);
 
-	const navigateToProfile = (email) => {
-		navigate("/");
+	const navigateToEditProfile = (email) => {
+		navigate("/profile/edit/"+ email);
 	};
+
+	const pronounceName = (e) =>{
+		const{name,value} = e.target;
+	}
 	
 
 	return (
@@ -43,7 +47,7 @@ export default function Employees() {
 					</tr>
 				</thead>
 				<tbody>
-					{employees.userDetails && employees.userDetails.length>0 && employees.userDetails.map((emp, key) => (		
+					{employees && employees.length>0 && employees.map((emp, key) => (		
 						<tr key={key + 1}>
 							<td>{emp.empId}</td>
 							<td>{emp.name}</td>
@@ -51,10 +55,11 @@ export default function Employees() {
 							<td>{emp.officeAddress}</td>
 							<td>{emp.country}</td>
 							<td>
-								<span className="ps-1 pe-3">
+								<span name={emp.audioTable.email} value={emp.audioTable.voiceNote}
+								 className="ps-1 pe-3" onClick={e=>pronounceName(e)} >
 									<SpeakerIcon />
 								</span>
-								<Button className="action_btn_primary" onClick={e=>navigateToProfile(emp.email)}>Edit</Button>
+								<Button className="action_btn_primary" onClick={e=>navigateToEditProfile(emp.email)}>Edit</Button>
 							</td>
 						</tr>
 					
