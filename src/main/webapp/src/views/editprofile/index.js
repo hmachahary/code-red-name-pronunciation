@@ -8,7 +8,7 @@ import "./styles.css";
 
 export default function EditProfile() {
 
-	const [optOut, setOptOut] = useState(false);
+	const [isAdmin, setIsAdmin] = useState(false);
 	const [isMsg, setIsMsg] = useState(false);
 	const [msg, setMsg] = useState("");
 	const [formData, setFormData] = useState({
@@ -35,8 +35,14 @@ export default function EditProfile() {
 
 	useEffect(() => {
 		(async () => {
-			const userData = JSON.parse(sessionStorage.userInfo);
-			const response = await getLoggedInUserDetails(JSON.stringify(userData.username));						
+			const emailToEdit = window.location.href.split(':')[1];
+			let userData = {};
+			if(emailToEdit ===""){
+				userData = JSON.parse(sessionStorage.userInfo);
+				setIsAdmin(userData.isAdmin);
+			}
+
+			const response = await getLoggedInUserDetails(JSON.stringify(emailToEdit));						
 			if (response.status === 200) {
 				setFormData({
 					...formData,
@@ -169,6 +175,7 @@ export default function EditProfile() {
 							name="designation"
 							type="text"
 							className="form-control"
+							disabled ={!isAdmin}
 							onChange={e => handleTextChange(e)}
 							value={formData.designation.value}>
 						</input></div>
@@ -202,6 +209,7 @@ export default function EditProfile() {
 							<input name="email"
 								type="text"
 								className="form-control"
+								disabled ={!isAdmin}
 								onChange={e => handleTextChange(e)}
 								value={formData.email.value}>
 							</input>
