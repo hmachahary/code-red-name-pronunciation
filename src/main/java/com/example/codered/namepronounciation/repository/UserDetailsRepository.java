@@ -15,8 +15,8 @@ public interface UserDetailsRepository extends JpaRepository<UserDetails,String>
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE T_USER_DETAILS SET  NAME = ?1, DOJ =?2, PHONE =?3, SKILLS=?4, DESIGNATION =?5, ABOUT =?6, MODIFIED_BY =?7, MODIFIED_TS =?9 WHERE EMAIL = ?8", nativeQuery = true)
-    void updateProfile(String name, Date dob, String phone, String skills, String designation, String about, Date modifiedBy, String email, Date modifiedAt);
+    @Query(value = "UPDATE T_USER_DETAILS SET  NAME = ?1, DOJ =?2, PHONE =?3, SKILLS=?4, DESIGNATION =?5, ABOUT =?6, MODIFIED_BY =?7, MODIFIED_TS =?9, country = ?10, office_address = ?11, resedential_address = ?12, opt_out = ?13 WHERE EMAIL = ?8", nativeQuery = true)
+    void updateProfile(String name, Date dob, String phone, String skills, String designation, String about, Date modifiedBy, String email, Date modifiedAt, String country, String officeAddress, String residentialAddress, Boolean optOut);
 
     Optional<UserDetails> findByEmailIgnoreCase(String email);
 }
