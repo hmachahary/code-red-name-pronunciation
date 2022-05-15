@@ -35,7 +35,6 @@ export const routes = [
 		name: "Edit",
 		path: "/profile/edit/:email",
 		component: <EditProfile />,
-		protected: false,
-		editProfile
+		protected: false		
 	}
 ];
