@@ -164,7 +164,7 @@ footer small {
 }
 
 .error-msg{
-	font-size: small;
+	font-size: 1 rem;
     margin-top: 1%;
 	color: #d71e28;	
 }

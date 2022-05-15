@@ -8,48 +8,87 @@ import "./styles.css";
 
 export default function Profile() {
 	const [userdetails, setuserdetails] = useState({});
-	const [record, setRecord] = useState(false);
-	const [optOut, setOptOut] = useState(false);
-
+	const [isMsg, setIsMsg] = useState(false);
+	const [msg, setMsg] = useState("");
+	const [searchTxt, setSearchTxt] = useState("");
+	
 	useEffect(() => {
-		(async () => {
-			debugger
-			const userData = JSON.parse(sessionStorage.userdata);
-			const response = await getLoggedInUserDetails(JSON.stringify(userData.username));
-			const userInfo = {
-				empId: response.data.empId,
-				designation: response.data.designation,
-				about: response.data.about,
-				email: response.data.email,
-				phone: response.data.phone,
-				resedentialAddress: response.data.resedentialAddress,
-				hobbies: response.data.hobbies,
-				officeAddress: response.data.officeAddress,
-				optOut: response.data.optOut,
-				skills: response.data.skills,
-				name: response.data.name,
-				country:response.data.country
-			};
-			if (response.status === 200) {
-				setuserdetails(userInfo);
-			} else {
-				setuserdetails(userInfo);
-			}
+		(async () => {									
+			const userData = JSON.parse(sessionStorage.userInfo);
+			await getUserDetails(userData.username);			
 		})();
 
 		return () => {
 			// this now gets called when the component unmounts
 		};
-	}, []);
+	}, []);	
 
-	const optOutAction = (e) => {
-		const name = e.target.name;
-		if (name === optOut) {
-			setOptOut(!optOut);
-		} else {
-			setOptOut(!optOut);
+	const handleSearch = async(e) =>{			
+		const value = e.target.value;
+		setSearchTxt(value);
+		setIsMsg(false);
+		setMsg("")
+		if(value!== "" && value.includes("@") && value.includes(".com")){		
+			if(value.length>4){							
+				await getUserDetails(value);	
+			}
+			else if (value === ""){
+				const userData = JSON.parse(sessionStorage.userInfo);
+				await getUserDetails(userData.username);
+			}
+			else{
+					
+			}
 		}
-	};
+		else if(value === ""){
+			setIsMsg(false);
+			setMsg("")
+		}
+		else{
+			setIsMsg(true);
+			setMsg("Please add a valid email")
+		}	
+	}
+
+	const dtl = {
+		empId: "1",
+					designation: "SSE",
+					about: "xx yy zz",
+					email: "x@abc.com",
+					phone: "8529637412",
+					resedentialAddress: "po op op",
+					hobbies: "badminton",
+					officeAddress: "office address",
+					optOut: false,
+					skills: "react",
+					name: "Taresh Uppal",
+					country:"En In"
+	}
+
+	const  getUserDetails = async(email) =>{		
+		const response = await getLoggedInUserDetails(email);
+		if(response.data!== null){			
+			if (response.status === 200) {
+				const userInfo = {
+					empId: response.data.empId,
+					designation: response.data.designation,
+					about: response.data.about,
+					email: response.data.email,
+					phone: response.data.phone,
+					resedentialAddress: response.data.resedentialAddress,
+					hobbies: response.data.hobbies,
+					officeAddress: response.data.officeAddress,
+					optOut: response.data.optOut,
+					skills: response.data.skills,
+					name: response.data.name,
+					country:response.data.country
+				};
+				setuserdetails(userInfo);
+			} else {
+				setuserdetails(dtl);
+			}
+		}
+	}
 
 	return (
 		<div className="wf_container-profile">
@@ -73,13 +112,17 @@ export default function Profile() {
 				</div>
 				<div className="col-12 col-md-9 col-lg-9">
 					<div className="wf_container-profile--right">
+					{isMsg && <span className="email-msg">{msg}</span>}
 						<h1 className="wf_profile-name">
+						
 							{userdetails.name}
 							<Link to="/profile/edit">Edit profile</Link>
-						</h1>
+							<input className="form-control wf_search-text-width" value={searchTxt} onChange={e => handleSearch(e)} placeholder="Search any user by Email Id..." type="text"></input>
+														
+						</h1>						
 						<h2 className="wf_profie-syllables">
 							<span>(Hit-lar Ma-cha-hary)</span>
-							<SpeakerIcon />
+							<SpeakerIcon /> 
 						</h2>
 						<h2 className="wf_name_designation">{userdetails.designation}</h2>
 						<div className="mt-2">

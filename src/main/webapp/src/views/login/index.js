@@ -23,13 +23,17 @@ export default function Login() {
 	const checkLoggedUser = async () => {
 		setLoading(true);
 		const data = { email: username, password: password };
-		const response = await checkLogin(JSON.stringify(data));
+		const response = await checkLogin(JSON.stringify(data));		
 		if (response.status === 200) {
 			sessionStorage.setItem("userInfo", JSON.stringify(response.data));
 			navigate("/");
 			setError("");
+			setIsAuthenticatedIssue(false)
 		} else {
+			//sessionStorage.setItem("userInfo", JSON.stringify({"username":"x@abc.com"}));
 			setError("Invalid Username/Passowrd. Please contact Admin.");
+			//navigate("/");
+			setIsAuthenticatedIssue(true)
 		}
 		setLoading(false);
 	};
