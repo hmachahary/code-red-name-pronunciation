@@ -9,6 +9,6 @@ import java.util.List;
 public interface UserService {
     Users createUser(Users userRequest);
     UserDetails getUserDetails(String email);
-    UserDetails editUserDetails(@RequestBody UserDetails userDetails);
     public AllEmployee getAllEmployee();
+    UserDetails editUserDetails(UserDetails userDetails, String email);
 }

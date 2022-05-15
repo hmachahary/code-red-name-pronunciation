@@ -1,7 +1,7 @@
 package com.example.codered.namepronounciation.controller;
 
+import com.example.codered.namepronounciation.dbEntity.SpeechPresets;
 import com.example.codered.namepronounciation.dbEntity.UserDetails;
-import com.example.codered.namepronounciation.repository.TestTableRepository;
 import com.example.codered.namepronounciation.repository.UserDetailsRepository;
 
 import com.example.codered.namepronounciation.service.NamePronounciationService;
@@ -106,6 +106,11 @@ public class NamePronounciationController {
         namePronounciationService.editPronounciation(email, audioBuffer);
 
         return ResponseEntity.ok("Voice updated Successfully");
+    }
+
+    @GetMapping("/presets")
+    public List<SpeechPresets> getAllVoicePresets() {
+        return namePronounciationService.getAllVoicePresets();
     }
 
 }
