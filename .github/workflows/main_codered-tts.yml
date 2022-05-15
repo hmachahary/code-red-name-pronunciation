@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'CodeRed-tts'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BA2EAAE3821B4F25AB520CD31A2ADE8D }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6543A99962F54BCB94E713C00F60C378 }}
           package: '*.jar'
