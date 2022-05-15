@@ -1,7 +1,6 @@
 package com.example.codered.namepronounciation.controller;
 
 import com.example.codered.namepronounciation.dbEntity.UserDetails;
-import com.example.codered.namepronounciation.repository.TestTableRepository;
 import com.example.codered.namepronounciation.repository.UserDetailsRepository;
 
 import com.example.codered.namepronounciation.service.NamePronounciationService;
