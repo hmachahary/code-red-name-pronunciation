@@ -19,5 +19,4 @@ public interface UserDetailsRepository extends JpaRepository<UserDetails,String>
     void updateProfile(String name, Date dob, String phone, String skills, String designation, String about, Date modifiedBy, String email, Date modifiedAt);
 
     Optional<UserDetails> findByEmailIgnoreCase(String email);
-
 }

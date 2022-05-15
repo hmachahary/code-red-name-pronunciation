@@ -1,7 +1,11 @@
 package com.example.codered.namepronounciation.service.impl;
 
-import com.example.codered.namepronounciation.dbEntity.Address;
+import com.example.codered.namepronounciation.dbEntity.AllEmployee;
+import com.example.codered.namepronounciation.dbEntity.AudioTable;
 import com.example.codered.namepronounciation.dbEntity.UserDetails;
+import com.example.codered.namepronounciation.dbEntity.Users;
+import com.example.codered.namepronounciation.repository.AudioRepository;
+import com.example.codered.namepronounciation.dbEntity.Address;
 import com.example.codered.namepronounciation.dbEntity.Users;
 import com.example.codered.namepronounciation.repository.AddressRepository;
 import com.example.codered.namepronounciation.repository.UserDetailsRepository;
@@ -50,6 +54,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Autowired
+    private UserDetailsRepository userDetailsRepo;
+
+    @Autowired
+    private AudioRepository audioRepository;
+    
     @Override
     public UserDetails editUserDetails(UserDetails userDetails, String email){
         Date date = new Date();
@@ -65,6 +75,16 @@ public class UserServiceImpl implements UserService {
             }
         }
         userDetailsRepository.updateProfile(userDetails.getName(), userDetails.getDob(), userDetails.getPhone(), userDetails.getSkills(), userDetails.getDesignation(), userDetails.getAbout(), userDetails.getModifiedBy(), email, date );
+        
         return userDetails;
+    }
+
+    public AllEmployee getAllEmployee(){
+       List<UserDetails> response_UserDetails = userDetailsRepo.findAll();
+       List<AudioTable> response_AudioTable = audioRepository.findAll();
+       AllEmployee allEmployee = new AllEmployee();
+       allEmployee.setUserDetails(response_UserDetails);
+       allEmployee.setAudioTable(response_AudioTable);
+       return allEmployee;
     }
 }

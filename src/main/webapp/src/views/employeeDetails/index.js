@@ -8,13 +8,13 @@ import { Button } from "../../components";
 
 export default function Employees() {
 	const navigate = useNavigate();
-	const [data, setData] = useState([]);
+	const [employees, setEmployees] = useState({});
 
 	useEffect(() => {
 		(async () => {
 			const response = await getEmployeeData();
-			if (response.data.length > 0) {
-				setData(response.data);
+			if (response.data != null) {
+				setEmployees(response.data);
 			}
 		})();
 
@@ -23,9 +23,10 @@ export default function Employees() {
 		};
 	}, []);
 
-	const navigateToProfile = (e) => {
-		navigate("/profile");
+	const navigateToProfile = (email) => {
+		navigate("/");
 	};
+	
 
 	return (
 		<div className="wf_employees">
@@ -42,20 +43,21 @@ export default function Employees() {
 					</tr>
 				</thead>
 				<tbody>
-					{data.map((val, key) => (
+					{employees.userDetails && employees.userDetails.length>0 && employees.userDetails.map((emp, key) => (		
 						<tr key={key + 1}>
-							<td>{val.id}</td>
-							<td>{val.name}</td>
-							<td>{val.email}</td>
-							<td>{val.address}</td>
-							<td>{val.culture}</td>
+							<td>{emp.empId}</td>
+							<td>{emp.name}</td>
+							<td>{emp.email}</td>
+							<td>{emp.officeAddress}</td>
+							<td>{emp.country}</td>
 							<td>
 								<span className="ps-1 pe-3">
 									<SpeakerIcon />
 								</span>
-								<Button className="action_btn_primary">Edit</Button>
+								<Button className="action_btn_primary" onClick={e=>navigateToProfile(emp.email)}>Edit</Button>
 							</td>
 						</tr>
+					
 					))}
 				</tbody>
 			</table>

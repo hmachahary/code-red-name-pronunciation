@@ -33,14 +33,14 @@ const emp = [
 		culture: "nepali",
 	},
 ];
-export const getEmployeeData = async () => {
+export const getEmployeeData = async () => {	
 	return api
-		.get("url here", { headers: headers })
-		.then((response) => {
+		.get("http://localhost:8080/api/v1/users/getAll", { headers: headers })		.then((response) => {	
+					
 			if (response.status === 200) {
 				return {
 					status: 200,
-					data: [],
+					data: response.data,
 					msg: "success",
 				};
 			}
@@ -49,7 +49,7 @@ export const getEmployeeData = async () => {
 			return {
 				status: 500,
 				msg: "failure",
-				data: emp,
+				data: [],
 			};
 		});
 };
