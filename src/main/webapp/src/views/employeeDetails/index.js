@@ -30,7 +30,7 @@ export default function Employees() {
 
 	return (
 		<div className="wf_employees">
-			<h1>Employee Details</h1>
+			<h1>Employee Details</h1>			
 			<table className="table table-bordered mt-5">
 				<thead>
 					<tr>
@@ -60,7 +60,9 @@ export default function Employees() {
 					
 					))}
 				</tbody>
-			</table>
+			</table> 				
+ 			<span className="wf_No-records">No records found!</span>
+			
 		</div>
 	);
 }
