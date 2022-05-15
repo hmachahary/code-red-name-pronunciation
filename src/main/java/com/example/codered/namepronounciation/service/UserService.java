@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface UserService {
     Users createUser(Users userRequest);
     UserDetails getUserDetails(String email);
-    UserDetails editUserDetails(@RequestBody UserDetails userDetails);
+    UserDetails editUserDetails(UserDetails userDetails, String email);
 }

@@ -1,34 +1,33 @@
 package com.example.codered.namepronounciation.dbEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "T_USER_DETAILS")
 public class UserDetails {
-    @Column(name = "EMP_Id")
-    private String empId;
-    @Column(name = "NAME")
-    private String name;
     @Id
-    @Column(name = "EMAIL")
+    @Column(name = "emp_id")
+    private String empId;
+
+    @Column(name = "name")
+    private String name;
+    @Column(name = "email")
     private String email;
-    @Column(name = "COUNTRY")
-    private String country;
-    @Column(name = "OFFICE_ADDRESS")
-    private String officeAddress;
-    @Column(name = "RESEDENTIAL_ADDRESS")
-    private String resedentialAddress;
-    @Column(name = "PHONE")
+    @Column(name = "phone")
     private String phone;
-    @Column(name = "SKILLS")
+    @Column(name = "skills")
     private String skills;
-    @Column(name = "DOB")
-    private Date dob;
-    @Column(name = "DESIGNATION")
+    @Column(name = "doj")
+    private Date doj;
+    @Column(name = "about")
+    private String about;
+    @Column(name = "gender")
+    private String gender;
+    @Column(name = "designation")
     private String designation;
     @Column(name= "CREATED_TS")
     private Date createdAt;
@@ -36,6 +35,13 @@ public class UserDetails {
     private Date modifiedAt;
     @Column(name= "MODIFIED_BY")
     private Date modifiedBy;
+
+    @OneToOne(mappedBy = "userDetails")
+    private Users users;
+
+    @ElementCollection
+    @OneToMany(mappedBy = "userDetails", cascade =  {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<Address> addressList;
 
     public String getEmpId() {
         return empId;
@@ -61,30 +67,6 @@ public class UserDetails {
         this.email = email;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getOfficeAddress() {
-        return officeAddress;
-    }
-
-    public void setOfficeAddress(String officeAddress) {
-        this.officeAddress = officeAddress;
-    }
-
-    public String getResedentialAddress() {
-        return resedentialAddress;
-    }
-
-    public void setResedentialAddress(String resedentialAddress) {
-        this.resedentialAddress = resedentialAddress;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -102,11 +84,11 @@ public class UserDetails {
     }
 
     public Date getDob() {
-        return dob;
+        return doj;
     }
 
-    public void setDob(Date dob) {
-        this.dob = dob;
+    public void setDob(Date doj) {
+        this.doj = doj;
     }
 
     public String getDesignation() {
@@ -139,5 +121,29 @@ public class UserDetails {
 
     public void setModifiedBy(Date modifiedBy) {
         this.modifiedBy = modifiedBy;
+    }
+
+    public List<Address> getAddress() {
+        return addressList;
+    }
+
+    public void setAddress(List<Address> address) {
+        this.addressList = address;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 }

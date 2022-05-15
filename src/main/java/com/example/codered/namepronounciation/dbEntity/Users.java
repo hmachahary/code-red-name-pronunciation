@@ -2,9 +2,7 @@ package com.example.codered.namepronounciation.dbEntity;
 
 import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -13,15 +11,26 @@ import javax.validation.constraints.NotNull;
 @Table(name="T_USERS")
 public class Users {
     @Id
-    @Email
-    @NotBlank(message = "Email is required")
-    private String email;
+    @Column(name = "empid")
     @NotBlank(message = "Employee ID is required")
     private String empID;
+
+    @Email
+    @Column(name = "email")
+    @NotBlank(message = "Email is required")
+    private String email;
+
+    @Column(name = "password")
     @NotBlank(message = "Password is required")
     private String password;
+
+    @Column(name = "is_Admin")
     @NotNull(message = "Admin flag is required")
     private boolean isAdmin;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "emp_id")
+    private UserDetails userDetails;
 
     public String getEmpID() {return empID;}
 
@@ -49,5 +58,13 @@ public class Users {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public UserDetails getUserDetails() {
+        return userDetails;
+    }
+
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
     }
 }

@@ -23,9 +23,9 @@ public class UserProfileController {
        return userDetailsRepo.findById(email.toLowerCase()).get();
      }
 
-    @PostMapping("/edit")
-    public UserDetails editUserDetails(@RequestBody UserDetails userDetails){
-        userService.editUserDetails(userDetails);
-        return userDetails;
-    }
+//    @PostMapping("/edit")
+//    public UserDetails editUserDetails(@RequestBody UserDetails userDetails){
+//        userService.editUserDetails(userDetails);
+//        return userDetails;
+//    }
 }
