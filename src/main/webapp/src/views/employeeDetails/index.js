@@ -24,17 +24,16 @@ export default function Employees() {
 	}, []);
 
 	const navigateToEditProfile = (email) => {
-		navigate("/profile/edit/"+ email);
+		navigate("/profile/edit/" + email);
 	};
 
-	const pronounceName = (e) =>{
-		const{name,value} = e.target;
-	}
-	
+	const pronounceName = (e) => {
+		const { name, value } = e.target;
+	};
 
 	return (
 		<div className="wf_employees">
-			<h1>Employee Details</h1>			
+			<h1>Employee Details</h1>
 			<table className="table table-bordered mt-5">
 				<thead>
 					<tr>
@@ -47,27 +46,36 @@ export default function Employees() {
 					</tr>
 				</thead>
 				<tbody>
-					{employees && employees.length>0 && employees.map((emp, key) => (		
-						<tr key={key + 1}>
-							<td>{emp.empId}</td>
-							<td>{emp.name}</td>
-							<td>{emp.email}</td>
-							<td>{emp.officeAddress}</td>
-							<td>{emp.country}</td>
-							<td>
-								<span name={emp.audioTable.email} value={emp.audioTable.voiceNote}
-								 className="ps-1 pe-3" onClick={e=>pronounceName(e)} >
-									<SpeakerIcon />
-								</span>
-								<Button className="action_btn_primary" onClick={e=>navigateToEditProfile(emp.email)}>Edit</Button>
-							</td>
-						</tr>
-					
-					))}
+					{employees &&
+						employees.length > 0 &&
+						employees.map((emp, key) => (
+							<tr key={key + 1}>
+								<td>{emp.empId}</td>
+								<td>{emp.name}</td>
+								<td>{emp.email}</td>
+								<td>{emp.officeAddress}</td>
+								<td>{emp.country}</td>
+								<td>
+									<span
+										name={emp && emp.audioTable && emp.audioTable.email}
+										value={emp.audioTable ? emp.audioTable.voiceNote : ""}
+										className="ps-1 pe-3"
+										onClick={(e) => pronounceName(e)}
+									>
+										<SpeakerIcon />
+									</span>
+									<Button
+										className="action_btn_primary"
+										onClick={(e) => navigateToEditProfile(emp.email)}
+									>
+										Edit
+									</Button>
+								</td>
+							</tr>
+						))}
 				</tbody>
-			</table> 				
- 			<span className="wf_No-records">No records found!</span>
-			
+			</table>
+			<span className="wf_No-records">No records found!</span>
 		</div>
 	);
 }

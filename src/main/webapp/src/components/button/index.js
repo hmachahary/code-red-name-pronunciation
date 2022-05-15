@@ -3,7 +3,7 @@ import "./styles.css";
 
 export default function Button({ children, type, onClick, title }) {
 	return (
-		<button title={title} onClick={onClick} className={`wf_btn`}>
+		<button title={title} onClick={onClick} className={`wf_btn wf_btn-${type}`}>
 			{children}
 		</button>
 	);

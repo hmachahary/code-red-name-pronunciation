@@ -13,6 +13,14 @@ public class AudioTable {
     private String email;
     @Column(name = "VOICE_NOTE")
     private byte[] voiceNote;
+    @Column(name = "REGION")
+    private String region;
+    @Column(name = "VOICE_TYPE")
+    private String voiceType;
+    @Column(name = "VOICE_GENDER")
+    private String voiceGender;
+    @Column(name = "PREFERENCE")
+    private String preference;
 
     public String getEmail() {
         return email;
@@ -28,5 +36,13 @@ public class AudioTable {
 
     public void setVoiceNote(byte[] voiceNote) {
         this.voiceNote = voiceNote;
+    }
+
+    public String getPreference() {
+        return preference;
+    }
+
+    public void setPreference(String preference) {
+        this.preference = preference;
     }
 }
