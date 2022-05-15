@@ -6,7 +6,6 @@ import com.example.codered.namepronounciation.dbEntity.UserDetails;
 import com.example.codered.namepronounciation.dbEntity.Users;
 import com.example.codered.namepronounciation.repository.AudioRepository;
 import com.example.codered.namepronounciation.dbEntity.Address;
-import com.example.codered.namepronounciation.dbEntity.Users;
 import com.example.codered.namepronounciation.repository.AddressRepository;
 import com.example.codered.namepronounciation.repository.UserDetailsRepository;
 import com.example.codered.namepronounciation.repository.UserRepository;

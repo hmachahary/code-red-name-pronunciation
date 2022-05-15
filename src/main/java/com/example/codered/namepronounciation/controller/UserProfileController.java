@@ -26,12 +26,6 @@ public class UserProfileController {
     public UserDetails getUserDetailsByEmail(String email){
        return userDetailsRepo.findById(email.toLowerCase()).get();
      }
-  
-    @PostMapping("/edit")
-    public UserDetails editUserDetails(@RequestBody UserDetails userDetails){
-        userService.editUserDetails(userDetails);
-        return userDetails;
-    }
 
     @GetMapping("/getAll")
     public ResponseEntity<AllEmployee> getAllUserDetails() {
