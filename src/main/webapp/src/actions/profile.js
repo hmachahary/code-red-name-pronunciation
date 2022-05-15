@@ -23,8 +23,7 @@ return api.get("http://localhost:8080/api/v1/users/findByEmail?email="+emailId, 
     );
 }
 
-export const updateUserDetails = async(data) =>{
-    debugger
+export const updateUserDetails = async(data) =>{    
     return api.post("http://localhost:8080/api/v1/saveUserDetails", data, {headers: headers})
     .then(response => {
         if(response.status === 200){
