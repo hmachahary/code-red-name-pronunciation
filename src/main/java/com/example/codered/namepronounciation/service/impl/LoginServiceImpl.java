@@ -21,7 +21,7 @@ public class LoginServiceImpl implements LoginService {
     private UserDetailsRepository userDetailsRepo;
 
     public LoginResponse authenticateUser(LoginRequest userRequest) throws IllegalAccessException {
-        Users userInDb = userRepository.findById(userRequest.getEmail()).orElse(new Users());
+        Users userInDb = userRepository.findByEmailIgnoreCase(userRequest.getEmail()).orElse(new Users());
         if(userRequest.getPassword().equals(userInDb.getPassword())){
             LoginResponse loginResponse = new LoginResponse();
             BeanUtils.copyProperties(userInDb,loginResponse);
