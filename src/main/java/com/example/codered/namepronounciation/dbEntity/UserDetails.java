@@ -1,5 +1,8 @@
 package com.example.codered.namepronounciation.dbEntity;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +45,15 @@ public class UserDetails {
     @ElementCollection
     @OneToMany(mappedBy = "userDetails", cascade =  {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Address> addressList;
+
+    @OneToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "email",
+            referencedColumnName = "email",
+            insertable = false, updatable = false,
+            foreignKey = @javax.persistence
+                    .ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    private AudioTable audioTable;
 
     public String getEmpId() {
         return empId;
@@ -145,5 +157,13 @@ public class UserDetails {
 
     public void setAbout(String about) {
         this.about = about;
+    }
+
+    public AudioTable getAudioTable() {
+        return audioTable;
+    }
+
+    public void setAudioTable(AudioTable audioTable) {
+        this.audioTable = audioTable;
     }
 }
