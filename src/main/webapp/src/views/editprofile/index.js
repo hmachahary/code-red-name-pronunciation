@@ -23,7 +23,9 @@ export default function EditProfile() {
 		skills: { value: "", error: "" },
 		name: { value: "", error: "" },
 		country: { value: "", error: "" },
-		optOut:{value:false, error:""}
+		optOut:{value:false, error:""},
+		dob:{value:"", error:""}
+
 	});
 
 	const handleTextChange = (e) => {
@@ -35,14 +37,16 @@ export default function EditProfile() {
 
 	useEffect(() => {
 		(async () => {
-			const emailToEdit = window.location.href.split(':')[1];
+			debugger
+			let emailToEdit = window.location.href.split('/').pop();
 			let userData = {};
-			if(emailToEdit ===""){
+			if(emailToEdit ==="edit"){
 				userData = JSON.parse(sessionStorage.userInfo);
 				setIsAdmin(userData.isAdmin);
+				emailToEdit = userData.email.trim();
 			}
 
-			const response = await getLoggedInUserDetails(JSON.stringify(emailToEdit));						
+			const response = await getLoggedInUserDetails((emailToEdit));						
 			if (response.status === 200) {
 				setFormData({
 					...formData,
@@ -81,11 +85,11 @@ export default function EditProfile() {
 			"designation": formData.designation.value,
 			"officeAddress":formData.officeAddress.value,
 			"resedentialAddress": formData.resedentialAddress.value,
-			"dob": "",
+			"dob": "2022-05-15",
 			"country": formData.country.value,
 			"optOut": !formData.optOut.value
 		  }				
-		const response = await updateUserDetails(JSON.stringify(data));
+		const response = await updateUserDetails(JSON.stringify(data), formData.email.value);
 		if (response.status === 200) {
 			setIsMsg(true);
 			setMsg("User details succesfully updated.")
@@ -109,11 +113,13 @@ export default function EditProfile() {
 			"designation": formData.designation.value,
 			"officeAddress":formData.officeAddress.value,
 			"resedentialAddress": formData.resedentialAddress.value,
-			"dob": "",
+			"dob": "2022-05-15",
 			"country": formData.country.value,
-			"optOut": formData.optOut.value
+			"optOut": formData.optOut.value,
+			"modifiedAt": "2022-05-15",
+  			"modifiedBy": "2022-05-15",
 		  }				
-		const response = await updateUserDetails(JSON.stringify(data));
+		const response = await updateUserDetails(JSON.stringify(data), formData.email.value);
 		if (response.status === 200) {
 			setIsMsg(true);
 			setMsg("User details succesfully updated.")

@@ -15,7 +15,7 @@ export default function Profile() {
 	useEffect(() => {
 		(async () => {									
 			const userData = JSON.parse(sessionStorage.userInfo);
-			await getUserDetails(userData.username);			
+			await getUserDetails(userData.email);			
 		})();
 
 		return () => {
@@ -48,22 +48,7 @@ export default function Profile() {
 			setIsMsg(true);
 			setMsg("Please add a valid email")
 		}	
-	}
-
-	const dtl = {
-		empId: "1",
-					designation: "SSE",
-					about: "xx yy zz",
-					email: "x@abc.com",
-					phone: "8529637412",
-					resedentialAddress: "po op op",
-					hobbies: "badminton",
-					officeAddress: "office address",
-					optOut: false,
-					skills: "react",
-					name: "Taresh Uppal",
-					country:"En In"
-	}
+	}	
 
 	const  getUserDetails = async(email) =>{		
 		const response = await getLoggedInUserDetails(email);
@@ -85,7 +70,7 @@ export default function Profile() {
 				};
 				setuserdetails(userInfo);
 			} else {
-				setuserdetails(dtl);
+				setuserdetails(null);
 			}
 		}
 	}
