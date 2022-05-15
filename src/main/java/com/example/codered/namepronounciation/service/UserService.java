@@ -11,4 +11,5 @@ public interface UserService {
     UserDetails getUserDetails(String email);
     public AllEmployee getAllEmployee();
     UserDetails editUserDetails(UserDetails userDetails, String email);
+    List<UserDetails> getAllUsers();
 }

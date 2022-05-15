@@ -32,6 +32,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     AddressRepository addressRepository;
 
+    @Autowired
+    private UserDetailsRepository userDetailsRepo;
+
+    @Autowired
+    private AudioRepository audioRepository;
+
     @Override
     public Users createUser(Users userRequest) {
         List<Address> addresses = userRequest.getUserDetails().getAddress();
@@ -52,12 +58,6 @@ public class UserServiceImpl implements UserService {
             throw new EntityNotFoundException("User with email ID = " + email + " not found.");
         }
     }
-
-    @Autowired
-    private UserDetailsRepository userDetailsRepo;
-
-    @Autowired
-    private AudioRepository audioRepository;
     
     @Override
     public UserDetails editUserDetails(UserDetails userDetails, String email){
@@ -78,6 +78,7 @@ public class UserServiceImpl implements UserService {
         return userDetails;
     }
 
+    @Override
     public AllEmployee getAllEmployee(){
        List<UserDetails> response_UserDetails = userDetailsRepo.findAll();
        List<AudioTable> response_AudioTable = audioRepository.findAll();
@@ -85,5 +86,11 @@ public class UserServiceImpl implements UserService {
        allEmployee.setUserDetails(response_UserDetails);
        allEmployee.setAudioTable(response_AudioTable);
        return allEmployee;
+    }
+
+    @Override
+    public List<UserDetails> getAllUsers() {
+        List<UserDetails> userDetails = userDetailsRepository.findAll();
+        return userDetails;
     }
 }
