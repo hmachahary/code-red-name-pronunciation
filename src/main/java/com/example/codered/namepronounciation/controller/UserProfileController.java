@@ -27,12 +27,6 @@ public class UserProfileController {
        return userDetailsRepo.findById(email.toLowerCase()).get();
      }
 
-    @PostMapping("/edit")
-    public UserDetails editUserDetails(@RequestBody UserDetails userDetails){
-        userService.editUserDetails(userDetails);
-        return userDetails;
-    }
-
     @GetMapping("/getAll")
     public ResponseEntity<AllEmployee> getAllUserDetails() {
         AllEmployee response = userService.getAllEmployee();
