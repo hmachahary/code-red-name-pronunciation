@@ -36,7 +36,7 @@ public class UsersController {
         return new ResponseEntity<>(userService.getUserDetails(email), HttpStatus.OK);
     }
 
-    @PutMapping("/{email}")
+    @PostMapping("/{email}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<UserDetails> editUserDetails(@PathVariable(name = "email") String email, @RequestBody UserDetails request) {
         return new ResponseEntity<>(userService.editUserDetails(request, email), HttpStatus.OK);

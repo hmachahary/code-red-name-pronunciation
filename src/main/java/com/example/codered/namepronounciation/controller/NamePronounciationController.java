@@ -101,7 +101,7 @@ public class NamePronounciationController {
 
 
     @PostMapping("/editPronounciation")
-    public ResponseEntity<String> editPronounciation(String email, byte[] audioBuffer, String region, String voiceType, String voiceGender, String preference) throws SQLException {
+    public ResponseEntity<String> editPronounciation(@RequestParam  String email,@RequestBody byte[] audioBuffer,@RequestParam String region,@RequestParam String voiceType,@RequestParam String voiceGender,@RequestParam String preference) throws SQLException {
         namePronounciationService.editPronounciation(email, audioBuffer, region, voiceType, voiceGender, preference);
 
         return ResponseEntity.ok("Voice updated Successfully");

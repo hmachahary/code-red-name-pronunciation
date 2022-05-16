@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./styles.css";
 import profile from "../../assets/images/profile.jpg";
 
 export default function Header() {
 	const [show, setShow] = useState(false);
+	const navigate = useNavigate();
 	const ref = useRef();
 	const location = useLocation();
 	useEffect(() => {
@@ -21,13 +22,21 @@ export default function Header() {
 		}
 	};
 
+	const logOut =(e) =>{		
+		e.preventDefault();
+		sessionStorage.removeItem("userInfo")
+		navigate("/login");		
+	}
+
+	console.log(location)
+
 	return (
 		<header className="wf_header">
 			<div className="wf_header-container">
 				<div className="wf_logo">
 					<Link to="/">CODE RED</Link>
 				</div>
-				{location.pathname !== "/login" && (
+				{location && location.pathname !== "/login" && (
 					<div className="wf_profile">
 						<div className="dropdown" ref={ref}>
 							<button
@@ -51,7 +60,7 @@ export default function Header() {
 									</Link>
 								</li>
 								<li>
-									<Link className="dropdown-item" to="#">
+									<Link className="dropdown-item" to="#" onClick={e=>logOut(e)}>
 										Logout
 									</Link>
 								</li>
