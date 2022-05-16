@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button, Horizontal } from "../../components";
 import profile from "../../assets/images/profile.jpg";
 import { ReactComponent as SpeakerIcon } from "../../assets/icons/sound.svg";
-import { getLoggedInUserDetails, updateUserDetails } from "../../actions/profile";
+import { getLoggedInUserDetails, updateUserDetails, pronounceUsername } from "../../actions/profile";
 import "./styles.css";
 
 export default function EditProfile() {
@@ -68,50 +68,34 @@ export default function EditProfile() {
 				gender: { value: response.data.gender, error: "" },
 				dob: { value: response.data.dob, error: "" },
 				createdAt: { value: response.data.createdAt, error: "" },
-			});
+			});			
 		}
 		setLoading(false);
 	};
 
-	const optOutAction = async (e) => {
-		console.log("OptOutAction is called");
+	const optOutAction = async (e) => {		
 		setLoading(true);
 		let data = {
-			empId: formData.empId.value,
-			name: formData.name.value,
-			email: formData.email.value,
-			phone: formData.phone.value,
-			skills: formData.skills.value,
-			about: formData.about.value,
-			gender: formData.gender.value,
-			designation: formData.designation.value,
-			officeAddress: formData.officeAddress.value,
-			resedentialAddress: formData.resedentialAddress.value,
-			dob: formData.dob.value,
-			country: formData.country.value,
-			optOut: !formData.optOut.value,
-			createdAt: formData.createdAt.value,
-		};
-		data = {
-			empId: "A12345",
-			name: "Hitlar Machahary",
-			email: "Hitlar.Machahary@codered.com",
-			phone: "9876543201",
-			skills: "HTML,CSS,Javascript,React,NodeJs",
-			about: "Heklou Menkalo",
-			gender: "Male",
-			designation: "Senior Software Engineer",
-			country: "India",
-			officeAddress: "adubesanahalli, Outer ring road, Marathalli-Sarjapur road, Bangalore-560012",
-			resedentialAddress: "934, Sunrise apt. 34th Main, BTM Layout, Bangalore-560987",
-			optOut: false,
-			createdAt: "2022-05-15",
-			modifiedAt: "2022-05-15",
-			modifiedBy: "2022-05-15",
-			dob: "2022-05-15",
-		};
+			"empId": formData.empId.value,
+			"name": formData.name.value,
+			"email": formData.email.value,
+			"phone":	formData.phone.value,
+			"skills": formData.skills.value,
+			"about": formData.about.value,
+			"gender": formData.gender.value,
+			"designation": formData.designation.value,
+			"country": formData.country.value,
+			"officeAddress": formData.officeAddress.value,
+			"resedentialAddress": formData.resedentialAddress.value,
+			"dob": formData.dob.value,
+			"optOut": !formData.optOut.value,
+			"modifiedAt": "2022-05-15",
+			"modifiedBy": "2022-05-15",
+			"createdAt": "2022-05-15T09:20:30.967+00:00"  
+		  }
+		
 		const response = await updateUserDetails(data, formData.email.value);
-		if (response.status === 200) {
+		if (response.status === 200) {			
 			setIsMsg(true);
 			setMsg("User details succesfully updated.");
 			setFormData({ ...formData, optOut: { value: !formData.optOut.value, error: "" } });
@@ -123,26 +107,27 @@ export default function EditProfile() {
 	};
 
 	const updateUserDetailsAction = async () => {
-		setLoading(true);
+		setLoading(true);	
+
 		let data = {
-			empId: formData.empId.value,
-			name: formData.name.value,
-			email: formData.email.value,
-			phone: formData.phone.value,
-			skills: formData.skills.value,
-			about: formData.about.value,
-			gender: formData.gender.value,
-			designation: formData.designation.value,
-			officeAddress: formData.officeAddress.value,
-			resedentialAddress: formData.resedentialAddress.value,
-			dob: formData.dob.value,
-			country: formData.country.value,
-			optOut: formData.optOut.value,
-			modifiedAt: "2022-05-15",
-			modifiedBy: "2022-05-15",
-			createdAt: formData.createdAt.value,
-		};
-		const response = await updateUserDetails(data, formData.email.value);
+			"empId": formData.empId.value,
+			"name": formData.name.value,
+			"email": formData.email.value,
+			"phone":	formData.phone.value,
+			"skills": formData.skills.value,
+			"about": formData.about.value,
+			"gender": formData.gender.value,
+			"designation": formData.designation.value,
+			"country": formData.country.value,
+			"officeAddress": formData.officeAddress.value,
+			"resedentialAddress": formData.resedentialAddress.value,
+			"dob": formData.dob.value,
+			"optOut": formData.optOut.value,
+			"modifiedAt": "2022-05-15",
+			"modifiedBy": "2022-05-15",
+			"createdAt": "2022-05-15T09:20:30.967+00:00"  
+		  }
+		const response = await updateUserDetails(JSON.stringify(data), formData.email.value);
 		if (response.status === 200) {
 			setIsMsg(true);
 			setMsg("User details succesfully updated.");
@@ -194,7 +179,7 @@ export default function EditProfile() {
 						<h1 className="wf_profile-name">{formData.name.value}</h1>
 						<h2 className="wf_profie-syllables">
 							<span>(Hit-lar Ma-cha-hary)</span>
-							<SpeakerIcon />
+						{formData.optOut.value === false && <SpeakerIcon onClick={() => pronounceUsername(formData.name.value, "en-IN")}></SpeakerIcon>}
 						</h2>
 						<h2 className="wf_name_designation">
 							<div></div>

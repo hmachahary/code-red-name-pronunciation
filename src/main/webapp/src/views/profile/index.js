@@ -131,9 +131,10 @@ export default function Profile() {
 							<h1 className="wf_profile-name">
 								<span>
 									{userdetails && userdetails.name}
-									<Link to="#" onClick={showModal}>
+									{/* <Link to="#" onClick={showModal}>
 										Change Preferences
-									</Link>
+									</Link> */}
+									<Link to ="/profile/edit">Edit Profile</Link>
 								</span>
 								<input
 									className="form-control wf_search-text-width"
@@ -145,7 +146,7 @@ export default function Profile() {
 							</h1>
 							<h2 className="wf_profie-syllables">
 								<span>(Hit-lar Ma-cha-hary)</span>
-								<SpeakerIcon onClick={() => pronounceUsername(userdetails.name, "en-IN")} />
+								{userdetails.optOut === false &&	<SpeakerIcon onClick={() => pronounceUsername(userdetails.name, "en-IN")} disabled={userdetails.optOut} />}
 							</h2>
 							<h2 className="wf_name_designation">{userdetails && userdetails.designation}</h2>
 							<div className="mt-2">
