@@ -12,6 +12,7 @@ export default function Profile() {
 	const [msg, setMsg] = useState("");
 	const [searchTxt, setSearchTxt] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [isSearched, setISSearched] = useState(false);
 
 	const userDetails = JSON.parse(sessionStorage.getItem("userDetails"));
 
@@ -36,16 +37,18 @@ export default function Profile() {
 				setLoading(true);
 				await getUserDetails(value);
 				setLoading(false);
+				setISSearched(true);
 			} else if (value === "") {
 				setLoading(true);
 				const userData = JSON.parse(sessionStorage.userInfo);
 				await getUserDetails(userData.username);
 				setLoading(false);
+				setISSearched(false);
 			} else {
 			}
 		} else if (value === "") {
 			setIsMsg(false);
-			setMsg("");
+			setMsg("");			
 		} else {
 			setIsMsg(true);
 			setMsg("Please add a valid email");
@@ -126,7 +129,7 @@ export default function Profile() {
 										<SpeakerIcon onClick={pronounceUserNameWithDefault} />
 									)}
 								</span>
-								<input
+							 	<input
 									className="form-control wf_search-text-width"
 									value={searchTxt}
 									onChange={(e) => handleSearch(e)}
@@ -135,7 +138,7 @@ export default function Profile() {
 								/>
 							</h1>
 							<h2 className="wf_profie-syllables">
-								<Link to="/profile/edit">Edit Profile</Link>
+							{!isSearched && <Link to="/profile/edit">Edit Profile</Link>}
 							</h2>
 							<h2 className="wf_name_designation">{userdetails && userdetails.designation}</h2>
 							<div className="mt-2">
