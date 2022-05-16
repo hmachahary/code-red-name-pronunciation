@@ -28,12 +28,14 @@ export default function Login() {
 			sessionStorage.setItem("userInfo", JSON.stringify(response.data));
 			if (response.data.admin) {
 				navigate("/employees");
+			} else {
+				navigate("/");
 			}
-			navigate("/");
 			setError("");
 			setIsAuthenticatedIssue(false);
 		} else {
 			setError("Invalid Username/Passowrd. Please contact Admin.");
+			//navigate("/");
 			setIsAuthenticatedIssue(true);
 		}
 		setLoading(false);
