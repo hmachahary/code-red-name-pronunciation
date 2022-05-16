@@ -17,4 +17,6 @@ public interface AudioRepository extends JpaRepository<AudioTable,String> {
     void updateAudio(String email, byte[] voiceNote, String region, String voiceType, String voiceGender, String preference);
 
     List<AudioTable> findAll();
+
+    AudioTable findAudioTableByEmailIgnoreCase(String email);
 }
