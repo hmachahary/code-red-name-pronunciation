@@ -44,14 +44,14 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	margin-bottom: 0;
 }
 .wf_container-profile--right .wf_profile-name span {
 	flex: 2;
 }
-.wf_container-profile--right .wf_profile-name a {
+.wf_container-profile--right .wf_profie-syllables a {
 	font-size: 1.4rem;
 	text-decoration: none;
-	padding-left: 3.5rem;
 }
 .wf_container-profile--right .wf_profie-syllables {
 	display: flex;
@@ -62,10 +62,10 @@
 	padding-right: 1.4rem;
 	font-size: 1.6rem;
 }
-.wf_container-profile--right .wf_profie-syllables svg {
+.wf_container-profile--right .wf_profile-name svg {
 	fill: #424141;
 }
-.wf_container-profile--right .wf_profie-syllables svg:hover {
+.wf_container-profile--right .wf_profile-name svg:hover {
 	cursor: pointer;
 }
 .wf_container-profile--left .wf_profile-content p,
