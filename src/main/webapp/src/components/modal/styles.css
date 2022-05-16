@@ -9,6 +9,10 @@
 .modal .form-group label {
 	margin-bottom: 0.6rem;
 }
+
+.modal .form-control input[type="file"] {
+	display: block !important;
+}
 .tab-pane .play-icon {
 	font-size: 1.4rem;
 }
@@ -26,4 +30,13 @@
 .tab-pane .play-icon button:active,
 .tab-pane .play-icon button:focus {
 	background: #da343c;
+}
+
+.tab-pane.active h2 {
+	margin: 3rem 0;
+}
+audio {
+	filter: sepia(20%) saturate(70%) grayscale(1) contrast(99%) invert(12%);
+	width: 100%;
+	height: 25px;
 }

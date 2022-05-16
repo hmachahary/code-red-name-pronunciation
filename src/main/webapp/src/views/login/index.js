@@ -14,11 +14,6 @@ export default function Login() {
 	const [isAuthenticatedIssue, setIsAuthenticatedIssue] = useState(false);
 	const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
-	/********** Audio recorder testing */
-	const [record, setRecord] = useState(false);
-	const [blob, setBlob] = useState(null);
-	/******************** */
-
 	useEffect(() => {
 		if (userInfo) {
 			navigate("/");
@@ -31,13 +26,14 @@ export default function Login() {
 		const response = await checkLogin(JSON.stringify(data));
 		if (response.status === 200) {
 			sessionStorage.setItem("userInfo", JSON.stringify(response.data));
+			if (response.data.admin) {
+				navigate("/employees");
+			}
 			navigate("/");
 			setError("");
 			setIsAuthenticatedIssue(false);
 		} else {
-			//sessionStorage.setItem("userInfo", JSON.stringify({"username":"x@abc.com"}));
 			setError("Invalid Username/Passowrd. Please contact Admin.");
-			//navigate("/");
 			setIsAuthenticatedIssue(true);
 		}
 		setLoading(false);
@@ -72,13 +68,6 @@ export default function Login() {
 						</div>
 						{isAuthenticatedIssue && <span className="error-msg">{error}</span>}
 					</div>
-					{/* <AudioRecorder
-						record={record}
-						onStop={onStop}
-						startRecording={startRecording}
-						stopRecording={stopRecording}
-					/> */}
-					{/* {blob && <audio src={blob.blobURL} controls />} */}
 				</div>
 			</div>
 		);

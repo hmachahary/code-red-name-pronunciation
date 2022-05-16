@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import { Horizontal, Spinner, Modal } from "../../components";
 import profile from "../../assets/images/profile.jpg";
 import { ReactComponent as SpeakerIcon } from "../../assets/icons/sound.svg";
-import { getLoggedInUserDetails, pronounceUsername } from "../../actions/profile";
+import {
+	getLoggedInUserDetails,
+	pronounceUsername,
+	updatePronunciationPreference,
+} from "../../actions/profile";
+import { languages } from "../../constants/speechSettings";
 import "./styles.css";
 
 export default function Profile() {
@@ -14,6 +19,11 @@ export default function Profile() {
 	const [loading, setLoading] = useState(false);
 	const [show, setShow] = useState(false);
 	const [record, setRecord] = useState(false);
+	const [blob, setBlob] = useState(null);
+	const [voices, setVoices] = useState([]);
+	const [userData, setUserData] = useState({});
+
+	const userDetails = JSON.parse(sessionStorage.getItem("userDetails"));
 
 	useEffect(() => {
 		(async () => {
@@ -25,6 +35,30 @@ export default function Profile() {
 			// this now gets called when the component unmounts
 		};
 	}, []);
+
+	useEffect(() => {
+		if (voices.length === 0) {
+			const lang = languages[0];
+			const userRegion = userDetails && userDetails.audioTable ? userDetails.audioTable.region : "";
+			const language = languages.filter((language) => language.locale === userRegion);
+			setUserData({
+				locale: userDetails && userDetails.audioTable ? userDetails.audioTable.region : lang.locale,
+				language: language[0] ? language[0].lang : lang.lang,
+				voice:
+					userDetails && userDetails.audioTable
+						? userDetails.audioTable.voiceType
+						: lang.voices[0].name,
+				gender:
+					userDetails && userDetails.audioTable
+						? userDetails.audioTable.voiceGender
+						: lang.voices[0].gender,
+				preference:
+					userDetails && userDetails.audioTable ? userDetails.audioTable.preference : "api",
+				filename: { value: "", error: "" },
+			});
+			setVoices(lang.voices);
+		}
+	}, [voices]);
 
 	const handleSearch = async (e) => {
 		const value = e.target.value;
@@ -98,8 +132,120 @@ export default function Profile() {
 	};
 
 	const onStop = (recordedBlob) => {
-		// setBlob(recordedBlob);
-		console.log("recordedBlob is: ", recordedBlob);
+		setBlob(recordedBlob);
+	};
+
+	const onHandleChange = (e, data) => {
+		const { name, value } = e.target;
+		if (name === "file" && e.target.files[0]) {
+			const re = /(\.mp3|\.m4a|\.webm|\.mp4|\.ogg|\..wav)$/i;
+			const fileSize = e.target.files[0].size / 1024 / 1024; // in MiB
+			const fileName = e.target.files[0].name;
+			if (fileSize > 2048 || !re.exec(fileName.toLowerCase())) {
+				const errorMsg =
+					fileSize > 2048
+						? "File size should be less than 2MB"
+						: !re.exec(fileName.toLowerCase())
+						? "File extension not supported"
+						: "File upload error";
+				setUserData({
+					...userData,
+					filename: { ...userData.filename, error: errorMsg },
+				});
+			} else {
+				const url = URL.createObjectURL(e.target.files[0]);
+				setUserData({
+					...userData,
+					filename: { value: e.target.files[0], error: "" },
+				});
+				setBlob({ blob: e.target.files[0], blobURL: url });
+			}
+		}
+		if (name === "language") {
+			const lang = languages.filter((language) => language.lang === value);
+			setVoices(lang[0].voices);
+			setUserData({
+				...userData,
+				[name]: value,
+				locale: lang[0].locale,
+				voice: lang[0].voices[0].name,
+				gender: lang[0].voices[0].gender,
+			});
+		}
+		if (name === "voice") {
+			const lang = languages.filter((language) => language.lang === userData.language);
+			const voiceObj = lang[0].voices.filter((voice) => voice.name === value);
+			setUserData({
+				...userData,
+				[name]: value,
+				gender: voiceObj[0].gender,
+			});
+		}
+		if (name !== "language" && name !== "file" && name !== "voice") {
+			setUserData({
+				...userData,
+				[name]: value,
+			});
+		}
+	};
+
+	const onReset = () => {
+		const lang = languages[0];
+		const userRegion = userDetails && userDetails.audioTable ? userDetails.audioTable.region : "";
+		const language = languages.filter((language) => language.locale === userRegion);
+		setUserData({
+			locale: userDetails && userDetails.audioTable ? userDetails.audioTable.region : lang.locale,
+			language: language[0] ? language[0].lang : lang.lang,
+			voice:
+				userDetails && userDetails.audioTable
+					? userDetails.audioTable.voiceType
+					: lang.voices[0].name,
+			gender:
+				userDetails && userDetails.audioTable
+					? userDetails.audioTable.voiceGender
+					: lang.voices[0].gender,
+			preference: userDetails && userDetails.audioTable ? userDetails.audioTable.preference : "api",
+			filename: { value: "", error: "" },
+		});
+		setBlob(null);
+		const element = document.getElementById("fileUpload");
+		if (!/safari/i.test(navigator.userAgent)) {
+			element.type = "";
+			element.type = "file";
+		} else {
+			element.value = "";
+		}
+	};
+
+	const saveSettings = (tabActive) => {
+		const email = userDetails.email;
+		const { locale, gender, voice, preference } = userData;
+		const userLocale = userDetails.audioTable ? userDetails.audioTable.region : null;
+		const userGender = userDetails.audioTable ? userDetails.audioTable.voiceGender : null;
+		const voiceType = userDetails.audioTable ? userDetails.audioTable.voiceType : null;
+		const userPreference = userDetails.audioTable ? userDetails.audioTable.preference : "api";
+		if (tabActive === "speech") {
+			updatePronunciationPreference(email, null, locale, gender, voice, preference);
+		}
+		if (tabActive === "fileUpload") {
+			updatePronunciationPreference(
+				email,
+				userData.filename.value,
+				userLocale,
+				userGender,
+				voiceType,
+				userPreference
+			);
+		}
+	};
+
+	const pronounceUserNameWithDefault = () => {
+		const { audioTable } = userDetails;
+		const locale = audioTable && audioTable.locale ? audioTable.locale : "en-US";
+		const voiceType =
+			audioTable && audioTable.voiceType ? audioTable.voiceType : "en-US-JennyNeural";
+		const voiceGender = audioTable && audioTable.voiceGender ? audioTable.voiceGender : "Female";
+		pronounceUsername(userdetails.name, locale, voiceGender, voiceType);
 	};
 
 	if (loading) {
@@ -145,7 +291,7 @@ export default function Profile() {
 							</h1>
 							<h2 className="wf_profie-syllables">
 								<span>(Hit-lar Ma-cha-hary)</span>
-								<SpeakerIcon onClick={() => pronounceUsername(userdetails.name, "en-IN")} />
+								<SpeakerIcon onClick={pronounceUserNameWithDefault} />
 							</h2>
 							<h2 className="wf_name_designation">{userdetails && userdetails.designation}</h2>
 							<div className="mt-2">
@@ -198,6 +344,12 @@ export default function Profile() {
 					startRecording={startRecording}
 					stopRecording={stopRecording}
 					onStop={onStop}
+					blob={blob}
+					onChange={onHandleChange}
+					onReset={onReset}
+					userData={userData}
+					voices={voices}
+					saveSettings={saveSettings}
 				/>
 			</div>
 		);

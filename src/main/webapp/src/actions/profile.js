@@ -22,7 +22,6 @@ export const getLoggedInUserDetails = async (emailId) => {
 };
 
 export const updateUserDetails = async (data, email) => {
-	console.log(data);
 	return api
 		.put(`/api/v1/users/${email}`, data)
 		.then((response) => {
@@ -35,7 +34,6 @@ export const updateUserDetails = async (data, email) => {
 			}
 		})
 		.catch((error) => {
-			console.log("error", error);
 			return {
 				status: 500,
 				msg: "failure",
@@ -47,12 +45,8 @@ export const updateUserDetails = async (data, email) => {
 export const pronounceUsername = async (name, locale, gender, voice) => {
 	await api
 		.get(`/api/v1/getPronunciation?name=${name}&locale=${locale}&voice=${voice}&gender=${gender}`)
-		.then((response) => {
-			//console.log("Sound played ", response);
-		})
-		.catch((err) => {
-			//console.log(err);
-		});
+		.then((response) => {})
+		.catch((err) => {});
 };
 
 export const updatePronunciationPreference = async (
