@@ -5,3 +5,4 @@ export { default as Spinner } from "./spinner";
 export { default as Horizontal } from "./hrline";
 export { default as Speaker } from "./speakerIcon";
 export { default as AudioRecorder } from "./audioRecorder";
+export { default as Modal } from "./modal";
