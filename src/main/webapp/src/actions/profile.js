@@ -22,12 +22,12 @@ export const getLoggedInUserDetails = async (emailId) => {
 		});
 };
 
-export const updateUserDetails = async (data, email) => {	    
-    return await axios
-		.post("http://localhost:8080/api/v1/users/"+email, data, {
+export const updateUserDetails = async (data, email) => {
+	return await axios
+		.post("http://localhost:8080/api/v1/users/" + email, data, {
 			headers: { "Content-type": "application/json" },
-		})	
-		.then((response) => {            
+		})
+		.then((response) => {
 			if (response.status === 200) {
 				return {
 					status: 200,
@@ -36,7 +36,7 @@ export const updateUserDetails = async (data, email) => {
 				};
 			}
 		})
-		.catch((error) => {            
+		.catch((error) => {
 			console.log("error", error);
 			return {
 				status: 500,
@@ -49,12 +49,8 @@ export const updateUserDetails = async (data, email) => {
 export const pronounceUsername = async (name, locale, gender, voice) => {
 	await api
 		.get(`/api/v1/getPronunciation?name=${name}&locale=${locale}&voice=${voice}&gender=${gender}`)
-		.then((response) => {
-			//console.log("Sound played ", response);
-		})
-		.catch((err) => {
-			//console.log(err);
-		});
+		.then((response) => {})
+		.catch((err) => {});
 };
 
 export const updatePronunciationPreference = async (

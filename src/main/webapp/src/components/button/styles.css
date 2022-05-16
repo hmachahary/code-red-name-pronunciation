@@ -22,3 +22,9 @@
 	background-color: #fff;
 	color: #d71e28;
 }
+.wf_btn-primary-disabled {
+	background: #e04d55;
+}
+.wf_btn-primary-disabled:hover {
+	cursor: not-allowed;
+}
