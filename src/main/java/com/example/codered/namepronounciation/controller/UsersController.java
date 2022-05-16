@@ -2,6 +2,7 @@ package com.example.codered.namepronounciation.controller;
 
 import com.example.codered.namepronounciation.dbEntity.UserDetails;
 import com.example.codered.namepronounciation.dbEntity.Users;
+import com.example.codered.namepronounciation.model.UserDetailsResponseModel;
 import com.example.codered.namepronounciation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class UsersController {
 
     @GetMapping("/{email}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UserDetails> getUserDetails(@PathVariable(value = "email") String email) {
+    public ResponseEntity<UserDetailsResponseModel> getUserDetails(@PathVariable(value = "email") String email) {
         return new ResponseEntity<>(userService.getUserDetails(email), HttpStatus.OK);
     }
 
