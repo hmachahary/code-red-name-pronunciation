@@ -4,6 +4,7 @@ import com.example.codered.namepronounciation.dbEntity.AllEmployee;
 import com.example.codered.namepronounciation.dbEntity.AudioTable;
 import com.example.codered.namepronounciation.dbEntity.UserDetails;
 import com.example.codered.namepronounciation.dbEntity.Users;
+import com.example.codered.namepronounciation.model.UserDetailsResponseModel;
 import com.example.codered.namepronounciation.repository.AudioRepository;
 import com.example.codered.namepronounciation.repository.UserDetailsRepository;
 import com.example.codered.namepronounciation.repository.UserRepository;
@@ -34,10 +35,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetails getUserDetails(String email) {
+    public UserDetailsResponseModel getUserDetails(String email) {
+        UserDetailsResponseModel userDetailsResponseModel = new UserDetailsResponseModel();
         if(userDetailsRepository.findByEmailIgnoreCase(email).isPresent()) {
             UserDetails userDetails = userDetailsRepository.findByEmailIgnoreCase(email).get();
-            return userDetails;
+            userDetailsResponseModel.setUserDetails(userDetails);
+            AudioTable audioTable =  audioRepository.findAudioTableByEmailIgnoreCase(email);
+            if(audioTable != null){
+                userDetailsResponseModel.setAudioTable((audioTable));
+            }
+            return userDetailsResponseModel;
         }else{
             throw new EntityNotFoundException("User with email ID = " + email + " not found.");
         }
