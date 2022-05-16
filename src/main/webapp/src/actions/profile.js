@@ -61,9 +61,14 @@ export const updatePronunciationPreference = async (
 	voiceType,
 	preference
 ) => {
-	await api
+	const data = audio;
+	await axios
 		.post(
-			`/api/v1/editPronounciation?email=${email}&audioBuffer=${audio}&region=${region}&voiceType=${voiceType}&voiceGender=${voiceGender}&preference=${preference}`
+			`http://localhost:8080/api/v1/editPronounciation?email=${email}&region=${region}&voiceType=${voiceType}&voiceGender=${voiceGender}&preference=${preference}`,
+			data,
+			{
+				headers: { "Content-type": "application/json" },
+			}
 		)
 		.then((response) => {
 			console.log("response");

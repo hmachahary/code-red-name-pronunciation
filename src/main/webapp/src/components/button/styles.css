@@ -11,6 +11,8 @@
 	user-select: none;
 	text-align: center;
 	border: none;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
 }
 .wf_btn:hover {
 	cursor: pointer;
@@ -27,4 +29,13 @@
 }
 .wf_btn-primary-disabled:hover {
 	cursor: not-allowed;
+}
+.wf_btn-success {
+	background-color: #299656;
+	color: #fff;
+}
+.wf_btn-lg {
+	padding-right: 1.5rem;
+	padding-left: 1.5rem;
+	font-size: 1.5rem;
 }

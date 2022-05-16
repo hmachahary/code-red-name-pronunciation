@@ -70,7 +70,6 @@ export default function Modal({
 									>
 										<option value="api">Text-To-Speech API</option>
 										<option value="file">Uploaded Sound File</option>
-										<option value="opt-out">Opt. Out</option>
 									</select>
 								</div>
 							</div>
