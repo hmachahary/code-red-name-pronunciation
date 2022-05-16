@@ -83,7 +83,7 @@ export default function Profile() {
 	};
 
 	const pronounceUserNameWithDefault = () => {
-		const { audioTable } = userDetails;
+		const audioTable = JSON.parse(sessionStorage.getItem("audioTable"));
 		const locale = audioTable && audioTable.locale ? audioTable.locale : "en-US";
 		const voiceType =
 			audioTable && audioTable.voiceType ? audioTable.voiceType : "en-US-JennyNeural";

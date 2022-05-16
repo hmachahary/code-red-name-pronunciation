@@ -17,7 +17,7 @@ function App() {
 
 	return (
 		<div className="wf_layout">
-			<Header />
+			<Header userInfo={userInfo} />
 			<div className="wf_container">
 				<Suspense fallback={<Spinner />}>
 					<Routes>
