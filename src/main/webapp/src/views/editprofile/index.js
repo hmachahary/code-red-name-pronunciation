@@ -43,11 +43,11 @@ export default function EditProfile() {
 
 	const getUserDetails = async () => {
 		setLoading(true);
-		let emailToEdit = window.location.href.split("/").pop();
+		let emailToEdit = window.location.href.split("/").pop();		
 		let userData = {};
-		if (emailToEdit === "edit") {
-			userData = JSON.parse(sessionStorage.userInfo);
-			setIsAdmin(userData.admin);
+		userData = JSON.parse(sessionStorage.userInfo);
+		setIsAdmin(userData.admin);
+		if (emailToEdit === "edit") {			
 			emailToEdit = userData.email.trim();
 		}
 		const response = await getLoggedInUserDetails(emailToEdit);
@@ -100,6 +100,7 @@ export default function EditProfile() {
 			setIsMsg(true);
 			setMsg("User details succesfully updated.");
 			setFormData({ ...formData, optOut: { value: !formData.optOut.value, error: "" } });
+			isAdmin ? navigate("/employees"):navigate("/");
 		} else {
 			setIsMsg(true);
 			setMsg("There is an error while updating user details.");
@@ -136,6 +137,7 @@ export default function EditProfile() {
 		if (response.status === 200) {
 			setIsMsg(true);
 			setMsg("User details succesfully updated.");
+			isAdmin ? navigate("/employees"):navigate("/");
 		} else {
 			setIsMsg(true);
 			setMsg("There is an error while updating user details.");
