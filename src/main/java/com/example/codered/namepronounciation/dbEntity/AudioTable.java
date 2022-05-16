@@ -45,4 +45,28 @@ public class AudioTable {
     public void setPreference(String preference) {
         this.preference = preference;
     }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getVoiceType() {
+        return voiceType;
+    }
+
+    public void setVoiceType(String voiceType) {
+        this.voiceType = voiceType;
+    }
+
+    public String getVoiceGender() {
+        return voiceGender;
+    }
+
+    public void setVoiceGender(String voiceGender) {
+        this.voiceGender = voiceGender;
+    }
 }
