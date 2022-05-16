@@ -14,6 +14,7 @@
 .wf_logo {
 	font-size: 3.2rem;
 	padding: 11px 0;
+	flex: 1;
 }
 .wf_logo a {
 	text-decoration: none;
@@ -26,6 +27,14 @@
 .wf_profile {
 	height: 4rem;
 	width: 4rem;
+	display: flex;
+	align-items: center;
+	flex: 0.5;
+	justify-content: end;
+}
+.wf_profile p {
+	margin-right: 0.5rem;
+	margin-bottom: 1px;
 }
 .wf_profile-img {
 	height: 100%;
