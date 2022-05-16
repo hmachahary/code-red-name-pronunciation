@@ -3,11 +3,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./styles.css";
 import profile from "../../assets/images/profile.jpg";
 
-export default function Header() {
+export default function Header({ userInfo }) {
 	const [show, setShow] = useState(false);
 	const navigate = useNavigate();
 	const ref = useRef();
 	const location = useLocation();
+	const userDetails = JSON.parse(sessionStorage.getItem("userDetails"));
 	useEffect(() => {
 		document.addEventListener("click", handleClick);
 
@@ -22,13 +23,13 @@ export default function Header() {
 		}
 	};
 
-	const logOut =(e) =>{		
+	const logOut = (e) => {
 		e.preventDefault();
-		sessionStorage.removeItem("userInfo")
-		navigate("/login");		
-	}
-
-	console.log(location)
+		sessionStorage.removeItem("userInfo");
+		sessionStorage.removeItem("userDetails");
+		sessionStorage.removeItem("audioTable");
+		navigate("/login");
+	};
 
 	return (
 		<header className="wf_header">
@@ -38,6 +39,7 @@ export default function Header() {
 				</div>
 				{location && location.pathname !== "/login" && (
 					<div className="wf_profile">
+						{userDetails && userDetails.name && <p>{userDetails.name}</p>}
 						<div className="dropdown" ref={ref}>
 							<button
 								className={`btn btn-secondary dropdown-toggle ${show ? "show" : ""}`}
@@ -60,7 +62,7 @@ export default function Header() {
 									</Link>
 								</li>
 								<li>
-									<Link className="dropdown-item" to="#" onClick={e=>logOut(e)}>
+									<Link className="dropdown-item" to="#" onClick={(e) => logOut(e)}>
 										Logout
 									</Link>
 								</li>

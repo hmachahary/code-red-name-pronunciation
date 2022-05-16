@@ -297,6 +297,7 @@ export default function EditProfile() {
 			if (response && response.status === 200) {
 				setShow(false);
 				setSettingPreferenceError("");
+				navigate("/");
 			} else {
 				setSettingPreferenceError("The settings could not be saved.");
 			}
@@ -306,7 +307,7 @@ export default function EditProfile() {
 			const data = uploadType === "file" ? userData.filename.value : blob.blob;
 			const response = await updatePronunciationPreference(
 				email,
-				userData.filename.value,
+				data,
 				userLocale,
 				userGender,
 				voiceType,
@@ -315,6 +316,7 @@ export default function EditProfile() {
 			if (response && response.status === 200) {
 				setShow(false);
 				setSettingPreferenceError("");
+				navigate("/");
 			} else {
 				setSettingPreferenceError("The settings could not be saved.");
 			}
@@ -373,7 +375,15 @@ export default function EditProfile() {
 							<span>
 								{formData.name.value}
 								{"  "}
-								{!formData.optOut.value && (
+								{formData.optOut.value !== "" && formData.optOut.value === false && (
+									<>
+										<SpeakerIcon onClick={pronounceUserNameWithDefault}></SpeakerIcon>
+										<Link className="ps-4" to="#" onClick={showModal}>
+											Settings
+										</Link>
+									</>
+								)}
+								{formData.optOut.value === "" && (
 									<>
 										<SpeakerIcon onClick={pronounceUserNameWithDefault}></SpeakerIcon>
 										<Link className="ps-4" to="#" onClick={showModal}>

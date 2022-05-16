@@ -1,9 +1,8 @@
-import api from "../config/api";
 import axios from "axios";
 
 export const getLoggedInUserDetails = async (emailId) => {
-	return api
-		.get(`/api/v1/users/${emailId}`)
+	return axios
+		.get(`http://localhost:8080/api/v1/users/${emailId}`)
 		.then((response) => {
 			if (response.status === 200) {
 				return {
@@ -46,8 +45,10 @@ export const updateUserDetails = async (data, email) => {
 };
 
 export const pronounceUsername = async (name, locale, gender, voice) => {
-	await api
-		.get(`/api/v1/getPronunciation?name=${name}&locale=${locale}&voice=${voice}&gender=${gender}`)
+	await axios
+		.get(
+			`http://localhost:8080/api/v1/getPronunciation?name=${name}&locale=${locale}&voice=${voice}&gender=${gender}`
+		)
 		.then((response) => {})
 		.catch((err) => {});
 };
