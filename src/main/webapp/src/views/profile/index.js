@@ -57,21 +57,23 @@ export default function Profile() {
 		const response = await getLoggedInUserDetails(email);
 		if (response.data !== null) {
 			if (response.status === 200) {
+				const { userDetails, audioTable } = response.data;
 				const userInfo = {
-					empId: response.data.empId,
-					designation: response.data.designation,
-					about: response.data.about,
-					email: response.data.email,
-					phone: response.data.phone,
-					resedentialAddress: response.data.resedentialAddress,
-					hobbies: response.data.hobbies,
-					officeAddress: response.data.officeAddress,
-					optOut: response.data.optOut,
-					skills: response.data.skills,
-					name: response.data.name,
-					country: response.data.country,
+					empId: userDetails.empId,
+					designation: userDetails.designation,
+					about: userDetails.about,
+					email: userDetails.email,
+					phone: userDetails.phone,
+					resedentialAddress: userDetails.resedentialAddress,
+					hobbies: userDetails.hobbies,
+					officeAddress: userDetails.officeAddress,
+					optOut: userDetails.optOut,
+					skills: userDetails.skills,
+					name: userDetails.name,
+					country: userDetails.country,
 				};
 				sessionStorage.setItem("userDetails", JSON.stringify(userInfo));
+				sessionStorage.setItem("audioTable", JSON.stringify(audioTable));
 				setuserdetails(userInfo);
 			} else {
 				setuserdetails(null);
