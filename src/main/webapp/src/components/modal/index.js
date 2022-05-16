@@ -18,6 +18,7 @@ export default function Modal({
 	userData,
 	voices,
 	saveSettings,
+	settingPreferenceError,
 }) {
 	const [active, setActive] = useState("speech");
 	useEffect(() => {
@@ -121,6 +122,11 @@ export default function Modal({
 								/>
 							</div>
 						</div>
+						{settingPreferenceError && (
+							<div className="mt-2">
+								<p className="text-danger">{settingPreferenceError}</p>
+							</div>
+						)}
 					</div>
 					<div className="modal-footer">
 						<Button type="secondary" onClick={onReset}>

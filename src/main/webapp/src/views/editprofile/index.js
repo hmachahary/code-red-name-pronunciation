@@ -42,6 +42,8 @@ export default function EditProfile() {
 	const [voices, setVoices] = useState([]);
 	const [userData, setUserData] = useState({});
 	const [uploadType, setUploadType] = useState("");
+	const [audioTable, setAudioTable] = useState(null);
+	const [settingPreferenceError, setSettingPreferenceError] = useState("");
 
 	const userDetails = JSON.parse(sessionStorage.getItem("userDetails"));
 
@@ -56,30 +58,6 @@ export default function EditProfile() {
 		getUserDetails();
 	}, []);
 
-	useEffect(() => {
-		if (voices.length === 0) {
-			const lang = languages[0];
-			const userRegion = userDetails && userDetails.audioTable ? userDetails.audioTable.region : "";
-			const language = languages.filter((language) => language.locale === userRegion);
-			setUserData({
-				locale: userDetails && userDetails.audioTable ? userDetails.audioTable.region : lang.locale,
-				language: language[0] ? language[0].lang : lang.lang,
-				voice:
-					userDetails && userDetails.audioTable
-						? userDetails.audioTable.voiceType
-						: lang.voices[0].name,
-				gender:
-					userDetails && userDetails.audioTable
-						? userDetails.audioTable.voiceGender
-						: lang.voices[0].gender,
-				preference:
-					userDetails && userDetails.audioTable ? userDetails.audioTable.preference : "api",
-				filename: { value: "", error: "" },
-			});
-			setVoices(lang.voices);
-		}
-	}, [voices]);
-
 	const getUserDetails = async () => {
 		setLoading(true);
 		let emailToEdit = window.location.href.split("/").pop();
@@ -91,23 +69,39 @@ export default function EditProfile() {
 		}
 		const response = await getLoggedInUserDetails(emailToEdit);
 		if (response.status === 200) {
+			const { userDetails, audioTable } = response.data;
+			setAudioTable(audioTable);
 			setFormData({
 				...formData,
-				empId: { value: response.data.empId, error: "" },
-				name: { value: response.data.name, error: "" },
-				about: { value: response.data.about, error: "" },
-				designation: { value: response.data.designation, error: "" },
-				email: { value: response.data.email, error: "" },
-				phone: { value: response.data.phone, error: "" },
-				resedentialAddress: { value: response.data.resedentialAddress, error: "" },
-				hobbies: { value: response.data.hobbies, error: "" },
-				officeAddress: { value: response.data.officeAddress, error: "" },
-				skills: { value: response.data.skills, error: "" },
-				country: { value: response.data.country, error: "" },
-				optOut: { value: response.data.optOut, error: "" },
-				gender: { value: response.data.gender, error: "" },
-				dob: { value: response.data.dob, error: "" },
-				createdAt: { value: response.data.createdAt, error: "" },
+				empId: { value: userDetails.empId, error: "" },
+				name: { value: userDetails.name, error: "" },
+				about: { value: userDetails.about, error: "" },
+				designation: { value: userDetails.designation, error: "" },
+				email: { value: userDetails.email, error: "" },
+				phone: { value: userDetails.phone, error: "" },
+				resedentialAddress: { value: userDetails.resedentialAddress, error: "" },
+				hobbies: { value: userDetails.hobbies, error: "" },
+				officeAddress: { value: userDetails.officeAddress, error: "" },
+				skills: { value: userDetails.skills, error: "" },
+				country: { value: userDetails.country, error: "" },
+				optOut: { value: userDetails.optOut, error: "" },
+				gender: { value: userDetails.gender, error: "" },
+				dob: { value: userDetails.dob, error: "" },
+				createdAt: { value: userDetails.createdAt, error: "" },
+			});
+			const lang = languages[0];
+			const userRegion = audioTable && audioTable.region ? audioTable.region : "";
+			const language = languages.filter((language) => language.locale === userRegion);
+			const userVoices = language && language.length > 0 ? language[0].voices : lang.voices;
+			setVoices(userVoices);
+			setUserData({
+				locale: audioTable && audioTable.region ? audioTable.region : lang.locale,
+				language: language[0] ? language[0].lang : lang.lang,
+				voice: audioTable && audioTable.voiceType ? audioTable.voiceType : lang.voices[0].name,
+				gender:
+					audioTable && audioTable.voiceGender ? audioTable.voiceGender : lang.voices[0].gender,
+				preference: audioTable && audioTable.preference ? audioTable.preference : "api",
+				filename: { value: "", error: "" },
 			});
 		}
 		setLoading(false);
@@ -263,20 +257,14 @@ export default function EditProfile() {
 
 	const onReset = () => {
 		const lang = languages[0];
-		const userRegion = userDetails && userDetails.audioTable ? userDetails.audioTable.region : "";
+		const userRegion = audioTable && audioTable.region ? audioTable.region : "";
 		const language = languages.filter((language) => language.locale === userRegion);
 		setUserData({
-			locale: userDetails && userDetails.audioTable ? userDetails.audioTable.region : lang.locale,
+			locale: audioTable && audioTable.region ? audioTable.region : lang.locale,
 			language: language[0] ? language[0].lang : lang.lang,
-			voice:
-				userDetails && userDetails.audioTable
-					? userDetails.audioTable.voiceType
-					: lang.voices[0].name,
-			gender:
-				userDetails && userDetails.audioTable
-					? userDetails.audioTable.voiceGender
-					: lang.voices[0].gender,
-			preference: userDetails && userDetails.audioTable ? userDetails.audioTable.preference : "api",
+			voice: audioTable && audioTable.voiceType ? audioTable.voiceType : lang.voices[0].name,
+			gender: audioTable && audioTable.voiceGender ? audioTable.voiceGender : lang.voices[0].gender,
+			preference: audioTable && audioTable.preference ? audioTable.preference : "api",
 			filename: { value: "", error: "" },
 		});
 		setBlob(null);
@@ -290,20 +278,33 @@ export default function EditProfile() {
 		setUploadType("");
 	};
 
-	const saveSettings = (tabActive) => {
+	const saveSettings = async (tabActive) => {
 		const email = userDetails.email;
 		const { locale, gender, voice, preference } = userData;
-		const userLocale = userDetails.audioTable ? userDetails.audioTable.region : null;
-		const userGender = userDetails.audioTable ? userDetails.audioTable.voiceGender : null;
-		const voiceType = userDetails.audioTable ? userDetails.audioTable.voiceType : null;
-		const userPreference = userDetails.audioTable ? userDetails.audioTable.preference : "api";
+		const userLocale = audioTable && audioTable.region ? audioTable.region : null;
+		const userGender = audioTable && audioTable.voiceGender ? audioTable.voiceGender : null;
+		const voiceType = audioTable && audioTable.voiceType ? audioTable.voiceType : null;
+		const userPreference = audioTable && audioTable.preference ? audioTable.preference : "api";
 		if (tabActive === "speech") {
-			updatePronunciationPreference(email, null, locale, gender, voice, preference);
+			const response = await updatePronunciationPreference(
+				email,
+				null,
+				locale,
+				gender,
+				voice,
+				preference
+			);
+			if (response && response.status === 200) {
+				setShow(false);
+				setSettingPreferenceError("");
+			} else {
+				setSettingPreferenceError("The settings could not be saved.");
+			}
 		}
 
 		if (tabActive === "fileupload" && userData) {
 			const data = uploadType === "file" ? userData.filename.value : blob.blob;
-			updatePronunciationPreference(
+			const response = await updatePronunciationPreference(
 				email,
 				userData.filename.value,
 				userLocale,
@@ -311,11 +312,18 @@ export default function EditProfile() {
 				voiceType,
 				userPreference
 			);
+			if (response && response.status === 200) {
+				setShow(false);
+				setSettingPreferenceError("");
+			} else {
+				setSettingPreferenceError("The settings could not be saved.");
+			}
 		}
 	};
 
 	const pronounceUserNameWithDefault = () => {
-		const audioTable = userDetails ? userDetails.audioTable : null;
+		const sessionAudioTable = JSON.parse(sessionStorage.getItem("audioTable"));
+		const audioTable = sessionAudioTable ? sessionAudioTable : null;
 		const locale = audioTable && audioTable.locale ? audioTable.locale : "en-US";
 		const voiceType =
 			audioTable && audioTable.voiceType ? audioTable.voiceType : "en-US-JennyNeural";
@@ -504,6 +512,7 @@ export default function EditProfile() {
 					userData={userData}
 					voices={voices}
 					saveSettings={saveSettings}
+					errorMsg={settingPreferenceError}
 				/>
 			)}
 		</div>
