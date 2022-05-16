@@ -1,6 +1,6 @@
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Horizontal, Spinner, Modal } from "../../components";
+import { Horizontal, Spinner } from "../../components";
 import profile from "../../assets/images/profile.jpg";
 import { ReactComponent as SpeakerIcon } from "../../assets/icons/sound.svg";
 import { getLoggedInUserDetails, pronounceUsername } from "../../actions/profile";
@@ -12,8 +12,8 @@ export default function Profile() {
 	const [msg, setMsg] = useState("");
 	const [searchTxt, setSearchTxt] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [show, setShow] = useState(false);
-	const [record, setRecord] = useState(false);
+
+	const userDetails = JSON.parse(sessionStorage.getItem("userDetails"));
 
 	useEffect(() => {
 		(async () => {
@@ -80,26 +80,13 @@ export default function Profile() {
 		setLoading(false);
 	};
 
-	const showModal = (e) => {
-		e.preventDefault();
-		setShow(true);
-	};
-
-	const onToggle = () => {
-		setShow(!show);
-	};
-
-	const startRecording = () => {
-		setRecord(true);
-	};
-
-	const stopRecording = () => {
-		setRecord(false);
-	};
-
-	const onStop = (recordedBlob) => {
-		// setBlob(recordedBlob);
-		console.log("recordedBlob is: ", recordedBlob);
+	const pronounceUserNameWithDefault = () => {
+		const { audioTable } = userDetails;
+		const locale = audioTable && audioTable.locale ? audioTable.locale : "en-US";
+		const voiceType =
+			audioTable && audioTable.voiceType ? audioTable.voiceType : "en-US-JennyNeural";
+		const voiceGender = audioTable && audioTable.voiceGender ? audioTable.voiceGender : "Female";
+		pronounceUsername(userdetails.name, locale, voiceGender, voiceType);
 	};
 
 	if (loading) {
@@ -131,10 +118,11 @@ export default function Profile() {
 							<h1 className="wf_profile-name">
 								<span>
 									{userdetails && userdetails.name}
-									{/* <Link to="#" onClick={showModal}>
-										Change Preferences
-									</Link> */}
-									<Link to ="/profile/edit">Edit Profile</Link>
+									{"  "}
+
+									{userdetails && userdetails.optOut === false && (
+										<SpeakerIcon onClick={pronounceUserNameWithDefault} />
+									)}
 								</span>
 								<input
 									className="form-control wf_search-text-width"
@@ -145,8 +133,7 @@ export default function Profile() {
 								/>
 							</h1>
 							<h2 className="wf_profie-syllables">
-								<span>(Hit-lar Ma-cha-hary)</span>
-								{userdetails.optOut === false &&	<SpeakerIcon onClick={() => pronounceUsername(userdetails.name, "en-IN")} disabled={userdetails.optOut} />}
+								<Link to="/profile/edit">Edit Profile</Link>
 							</h2>
 							<h2 className="wf_name_designation">{userdetails && userdetails.designation}</h2>
 							<div className="mt-2">
@@ -192,14 +179,6 @@ export default function Profile() {
 						</div>
 					</div>
 				</div>
-				<Modal
-					show={show}
-					record={record}
-					onToggle={onToggle}
-					startRecording={startRecording}
-					stopRecording={stopRecording}
-					onStop={onStop}
-				/>
 			</div>
 		);
 	}
