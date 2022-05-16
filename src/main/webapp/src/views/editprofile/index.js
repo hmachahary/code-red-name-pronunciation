@@ -41,6 +41,7 @@ export default function EditProfile() {
 	const [blob, setBlob] = useState(null);
 	const [voices, setVoices] = useState([]);
 	const [userData, setUserData] = useState({});
+	const [uploadType, setUploadType] = useState("");
 
 	const userDetails = JSON.parse(sessionStorage.getItem("userDetails"));
 
@@ -201,6 +202,7 @@ export default function EditProfile() {
 	};
 
 	const onStop = (recordedBlob) => {
+		setUploadType("record");
 		setBlob(recordedBlob);
 	};
 
@@ -223,6 +225,7 @@ export default function EditProfile() {
 				});
 			} else {
 				const url = URL.createObjectURL(e.target.files[0]);
+				setUploadType("file");
 				setUserData({
 					...userData,
 					filename: { value: e.target.files[0], error: "" },
@@ -284,6 +287,7 @@ export default function EditProfile() {
 		} else {
 			element.value = "";
 		}
+		setUploadType("");
 	};
 
 	const saveSettings = (tabActive) => {
@@ -297,7 +301,8 @@ export default function EditProfile() {
 			updatePronunciationPreference(email, null, locale, gender, voice, preference);
 		}
 
-		if (tabActive === "fileupload") {
+		if (tabActive === "fileupload" && userData) {
+			const data = uploadType === "file" ? userData.filename.value : blob.blob;
 			updatePronunciationPreference(
 				email,
 				userData.filename.value,
@@ -470,15 +475,6 @@ export default function EditProfile() {
 								>
 									{userDetails && userDetails.optOut ? "Opt In" : "Opt Out"}
 								</Button>
-								{/* <button
-									className="action_btn_danger"
-									title="Opt Out from Name Pronounciation"
-									name="optOut"
-									disabled={formData.optOut.value}
-									onClick={(e) => optOutAction(e)}
-								>
-									Opt Out
-								</button> */}
 								{isAdmin && (
 									<Button
 										size="lg"
