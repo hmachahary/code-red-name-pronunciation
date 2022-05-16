@@ -8,6 +8,7 @@ export default function SpeechAPISeetings({ onChange, userData, voices }) {
 		const userInfo = JSON.parse(sessionStorage.getItem("userDetails"));
 		pronounceUsername(userInfo.name, userData.locale, userData.gender, userData.voice);
 	};
+
 	return (
 		<>
 			<div className="row">

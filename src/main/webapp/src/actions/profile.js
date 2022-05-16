@@ -37,7 +37,6 @@ export const updateUserDetails = async (data, email) => {
 			}
 		})
 		.catch((error) => {
-			console.log("error", error);
 			return {
 				status: 500,
 				msg: "failure",
@@ -62,7 +61,7 @@ export const updatePronunciationPreference = async (
 	preference
 ) => {
 	const data = audio;
-	await axios
+	return await axios
 		.post(
 			`http://localhost:8080/api/v1/editPronounciation?email=${email}&region=${region}&voiceType=${voiceType}&voiceGender=${voiceGender}&preference=${preference}`,
 			data,
@@ -71,7 +70,15 @@ export const updatePronunciationPreference = async (
 			}
 		)
 		.then((response) => {
-			console.log("response");
+			return {
+				status: 200,
+				data: response,
+			};
 		})
-		.then((err) => console.log(err));
+		.then((err) => {
+			return {
+				status: err.status,
+				data: null,
+			};
+		});
 };
