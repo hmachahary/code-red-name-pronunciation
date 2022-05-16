@@ -1,4 +1,5 @@
 import api from "../config/api";
+import axios from "axios";
 
 export const getLoggedInUserDetails = async (emailId) => {
 	return api
@@ -21,11 +22,12 @@ export const getLoggedInUserDetails = async (emailId) => {
 		});
 };
 
-export const updateUserDetails = async (data, email) => {
-	console.log(data);
-	return api
-		.put(`/api/v1/users/${email}`, data)
-		.then((response) => {
+export const updateUserDetails = async (data, email) => {	    
+    return await axios
+		.post("http://localhost:8080/api/v1/users/"+email, data, {
+			headers: { "Content-type": "application/json" },
+		})	
+		.then((response) => {            
 			if (response.status === 200) {
 				return {
 					status: 200,
@@ -34,7 +36,7 @@ export const updateUserDetails = async (data, email) => {
 				};
 			}
 		})
-		.catch((error) => {
+		.catch((error) => {            
 			console.log("error", error);
 			return {
 				status: 500,
