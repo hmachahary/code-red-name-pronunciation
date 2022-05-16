@@ -44,7 +44,7 @@ public class NamePronounciationController {
 
     @GetMapping(value = "/getPronunciation")
     public void getPronunciation(@RequestParam("locale") String locale, @RequestParam ("name") String textToSynthesize, @RequestParam(name = "gender") String gender, @RequestParam(name = "voice") String voice) {
-        String outputFormat = AudioOutputFormat.Riff24Khz16BitMonoPcm; // Short name for "Microsoft Server Speech Text to Speech Voice (en-US, Guy24KRUS)"
+        String outputFormat = AudioOutputFormat.Riff16Khz16BitMonoPcm; // Short name for "Microsoft Server Speech Text to Speech Voice (en-US, Guy24KRUS)"
 
         try {
             byte[] audioBuffer = TTSService.Synthesize(textToSynthesize, outputFormat, locale, gender, voice);
@@ -61,11 +61,11 @@ public class NamePronounciationController {
             //specify the audio format
             AudioFormat audioFormat = new AudioFormat(
                     AudioFormat.Encoding.PCM_SIGNED,
-                    24000,
+                    16000,
                     16,
                     1,
                     1 * 2,
-                    24000,
+                    16000,
                     false);
 
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(outputWave));
