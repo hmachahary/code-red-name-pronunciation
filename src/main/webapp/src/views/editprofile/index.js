@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, Horizontal } from "../../components";
 import profile from "../../assets/images/profile.jpg";
 import { ReactComponent as SpeakerIcon } from "../../assets/icons/sound.svg";
@@ -7,6 +7,7 @@ import { getLoggedInUserDetails, updateUserDetails, pronounceUsername } from "..
 import "./styles.css";
 
 export default function EditProfile() {
+	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [isMsg, setIsMsg] = useState(false);
@@ -46,7 +47,7 @@ export default function EditProfile() {
 		let userData = {};
 		if (emailToEdit === "edit") {
 			userData = JSON.parse(sessionStorage.userInfo);
-			setIsAdmin(userData.isAdmin);
+			setIsAdmin(userData.admin);
 			emailToEdit = userData.email.trim();
 		}
 		const response = await getLoggedInUserDetails(emailToEdit);
@@ -106,6 +107,10 @@ export default function EditProfile() {
 		setLoading(false);
 	};
 
+	const navigateToEmployees = (e) =>{
+		navigate("/employees");
+	}
+
 	const updateUserDetailsAction = async () => {
 		setLoading(true);	
 
@@ -137,6 +142,7 @@ export default function EditProfile() {
 		}
 		setLoading(false);
 	};
+
 
 	return (
 		<div className="wf_container-profile">
@@ -295,6 +301,16 @@ export default function EditProfile() {
 								>
 									Opt Out
 								</button>
+								{isAdmin && 
+								<button
+								className="action_btn_danger"
+								title="Opt Out from Name Pronounciation"								
+								onClick={(e) => navigateToEmployees(e)}
+							>
+								All Employees
+							</button>
+															
+								}
 								{isMsg && <span className="msg">{msg}</span>}
 							</div>
 						</div>

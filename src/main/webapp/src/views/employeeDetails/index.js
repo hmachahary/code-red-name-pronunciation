@@ -2,25 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as SpeakerIcon } from "../../assets/icons/sound.svg";
 import { getEmployeeData } from "../../actions/employee";
+import { Button, Spinner } from "../../components/index.js";
 import "./styles.css";
 
-import { Button } from "../../components";
 
 export default function Employees() {
 	const navigate = useNavigate();
 	const [employees, setEmployees] = useState([]);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		(async () => {
+			setLoading(true)
 			const response = await getEmployeeData();
 			if (response.data != null) {
 				setEmployees(response.data);
 			}
+			setLoading(false);
 		})();
-
 		return () => {
 			// this now gets called when the component unmounts
 		};
+		setLoading(false);
+
 	}, []);
 
 	const navigateToEditProfile = (email) => {
@@ -31,6 +35,9 @@ export default function Employees() {
 		const { name, value } = e.target;
 	};
 
+	if (loading) {
+		return <Spinner />;
+	} else {
 	return (
 		<div className="wf_employees">
 			<h1>Employee Details</h1>
@@ -75,7 +82,8 @@ export default function Employees() {
 						))}
 				</tbody>
 			</table>
-			<span className="wf_No-records">No records found!</span>
+			{employees && employees.length === 0 && <span className="wf_No-records">No records found!</span>}
 		</div>
 	);
+	}
 }

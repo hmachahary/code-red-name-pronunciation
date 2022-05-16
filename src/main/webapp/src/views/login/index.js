@@ -26,7 +26,12 @@ export default function Login() {
 		const response = await checkLogin(JSON.stringify(data));		
 		if (response.status === 200) {
 			sessionStorage.setItem("userInfo", JSON.stringify(response.data));
+			if(response.data.admin){
+				navigate("/employees");
+			}
+			else{
 			navigate("/");
+			}
 			setError("");
 			setIsAuthenticatedIssue(false)
 		} else {
